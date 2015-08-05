@@ -1,0 +1,27 @@
+.htm_viz_debug_panel {
+    min-height: 200px;
+    max-height: 200px;
+}
+
+.htm_viz_debug_panel_body {
+    min-height: 150px;
+    max-height: 150px;
+    overflow: scroll;
+}
+
+.htm_viz_main_buttons {
+    padding: 0;
+}
+
+.htm_viz_settings_panel {
+    min-height: 820px;
+}
+
+.htm_viz_main_panel {
+    min-height: 600px;
+    max-height: 600px;
+}
+
+.htm_viz_pick_settings {
+    min-height:820px;
+}

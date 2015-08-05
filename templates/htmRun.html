@@ -1,0 +1,59 @@
+{% extends "basic.html" %}
+
+{% block body %}
+    <div class="panel panel-default col-xs-6 col-md-3 panel-primary htm_viz_settings_panel">
+        <div class="panel-heading">
+            <h3 class="panel-title">Настройки HTM</h3>
+        </div>
+        <div class="panel-body">
+
+
+        </div>
+    </div>
+
+    <div class="panel panel-default col-md-9 panel-primary htm_viz_main_panel">
+        <div class="panel-heading">
+            <h3 class="panel-title">Визуализация</h3>
+        </div>
+
+        <div class="panel-body">
+            <ul class="nav nav-pills">
+                <li>
+                    <button onclick='do_go()' class="btn btn-default">
+                        <span class="glyphicon glyphicon-play" aria-hidden="true"></span>
+                    </button>
+                </li>
+
+                <li>
+                    <button onclick='do_stop()' class="btn btn-default">
+                        <span class="glyphicon glyphicon-stop" aria-hidden="true"></span>
+                    </button>
+                </li>
+
+                <li>
+                    <button onclick='do_go()' type="submit" class="btn btn-default">
+                        <span class="glyphicon glyphicon-step-forward" aria-hidden="true"></span></button>
+                </li>
+            </ul>
+
+            <div id="viz">
+
+            </div>
+
+
+        </div>
+    </div>
+
+    <div class="panel panel-default col-md-9 panel-primary htm_viz_debug_panel">
+        <div class="panel-heading">
+            <h3 class="panel-title">Отладочная информация</h3>
+        </div>
+        <div id="debugID" class="panel-body htm_viz_debug_panel_body">
+
+        </div>
+    </div>
+
+
+
+
+{% endblock %}

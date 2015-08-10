@@ -4,70 +4,55 @@ import sys
 from socketModule import socketModule
 
 
-def do_connect(port):
-    host = "localhost"
-
-    sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    sock.connect((host, port))
-
-    sock.sendall(bytes("get\n", 'UTF-8'))
-    data = sock.recv(1024)
-    sock.sendall(bytes("close\n", 'UTF-8'))
-
-    sock.close()
-    return data
+# def do_connect(socket_port):
+#     client=socketModule()
+#
+#     obj=client.sendRqst("localhost",socket_port,bytes("get", 'UTF-8'))
+#     obj=client.sendRqst("localhost",socket_port,bytes("close", 'UTF-8'))
+#
+#     return obj
 
 
-def test_connect(socket_port):
-    host = "localhost"
-
-    sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    try:
-        sock.connect((host, socket_port))
-        sock.sendall(bytes("close\n", 'UTF-8'))
-        sock.close()
-        return True
-    except ConnectionRefusedError:
-        sock.close()
-        return False
+# def test_connect(socket_port):
+#     client=socketModule()
+#     try:
+#         obj=client.sendRqst("localhost",socket_port,bytes("close", 'UTF-8'))
+#         return True
+#     except ConnectionRefusedError:
+#         client.close()
+#         return False
 
 
 def turn_on_htm_server(socket_port):
     SOCKET_SERVER_PORT = 10100
-    host = "localhost"
-    sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    client=socketModule()
     try:
-        sock.connect((host, SOCKET_SERVER_PORT))
-        sock.sendall(bytes("runServer:%s\n" % socket_port, 'UTF-8'))
+        obj=client.sendRqst("localhost",SOCKET_SERVER_PORT,bytes("runServer:%s\n" % socket_port, 'UTF-8'))
     except ConnectionRefusedError:
         pass
     finally:
-        sock.close()
+        client.close()
+        return obj
 
 
-def stop_htm_server(socket_port):
-    host = "localhost"
-    sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    try:
-        sock.connect((host, socket_port))
-        sock.sendall(bytes("exit\n", 'UTF-8'))
-    except ConnectionRefusedError:
-        sock.close()
-        return False
-    return True
+# def stop_htm_server(socket_port):
+#     client=socketModule()
+#     try:
+#         obj=client.sendRqst("localhost",socket_port,bytes("exit", 'UTF-8'))
+#     except ConnectionRefusedError:
+#         client.close()
+#         return False
+#     return True
 
 
-def send(socket_port, data):
-    host = "localhost"
-    sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    sock.connect((host, socket_port))
-    sock.sendall(bytes(data + "\n", 'UTF-8'))
-    sock.close()
+# def send(socket_port, data):
+#     client=socketModule()
+#     obj=client.sendRqst("localhost",socket_port,bytes(data, 'UTF-8'))
 
 
 def receive(socket_port):
     client=socketModule()
-    obj=client.sendRqst("localhost",socket_port,bytes("get:", 'UTF-8'))
+    obj=client.sendRqst("localhost",socket_port,bytes("get", 'UTF-8'))
 
     return obj
 

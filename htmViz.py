@@ -1,3 +1,4 @@
+import json
 from flask import Flask, request, redirect, url_for
 from flask.templating import render_template
 from flask import session
@@ -37,17 +38,25 @@ def turn_on_java_server():
     if 'user_mail' in session:
         user = User.get(User.mail == session['user_mail'])
         port = user.port
-        if connection.test_connect(port) == False:
-            connection.turn_on_htm_server(port)
-        while not connection.test_connect(port):
-            pass
-        res = connection.receive(port)
+        # if connection.test_connect(port) == False:
+        res=connection.turn_on_htm_server(port)
+        # while not connection.test_connect(port):
+        #     pass
+        # res = connection.receive(port)
             # else:
             #     print("no_connection")
 
     print(res)
-    return jsonify(eval(res))
+    return jsonify(json.dumps(res))
 
+@app.route('/get_data_from_htm/')
+def get_data_from_htm():
+    if 'user_mail' in session:
+        user = User.get(User.mail == session['user_mail'])
+        port = user.port
+        res=connection.receive(port)
+        print(res)
+        return jsonify(json.dumps(res))
 
 @app.route('/stop_java_server/', methods=['POST'])
 def stop_java_server():

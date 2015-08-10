@@ -15,10 +15,10 @@ class htm_server:
         self.port=port
 
     def handle(self,data,answer):
-        if(data.decode('utf-8')=="get:"):
-            return pickle.dumps(answer, pickle.HIGHEST_PROTOCOL)
+        if(data.decode('utf-8')=="get"):
+            return answer
         else:
-            return pickle.dumps(404)
+            return {"status":404}
 
     def toVector(self,m):
         output=[]

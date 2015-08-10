@@ -4,6 +4,9 @@ import socket
 
 class socketModule:
 
+    def close(self):
+        self.sock.close()
+
     def openLocalPort(self, port):
         self.sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         server_address = ('localhost', port)
@@ -16,7 +19,7 @@ class socketModule:
         connection, client_address = self.sock.accept()
         data = bytes()
         data += connection.recv(512)
-        answer=handle(data)
+        answer=pickle.dumps(handle(data), pickle.HIGHEST_PROTOCOL)
 
         end_message = "[THIS_IS_THE_END_HOLD_YOUR_BREATH_AND_COUNT_TO_TEN]"
         connection.sendall(answer)

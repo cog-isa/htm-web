@@ -38,7 +38,7 @@ def turn_on_java_server():
         user = User.get(User.mail == session['user_mail'])
         port = user.port
         if connection.test_connect(port) == False:
-            connection.turn_on_java_machine(port)
+            connection.turn_on_htm_server(port)
         while not connection.test_connect(port):
             pass
         res = connection.receive(port)
@@ -55,7 +55,7 @@ def stop_java_server():
         user = User.get(User.mail == session['user_mail'])
         port = user.port
         if connection.test_connect(port):
-            connection.stop_java_server(port)
+            connection.stop_htm_server(port)
             print('stopped')
 
     return jsonify({'data': str('ok')})
@@ -88,7 +88,7 @@ def logout():
 def turn_off_all_java_machines():
     q = User.select()
     for i in q:
-        connection.stop_java_server(i.port)
+        connection.stop_htm_server(i.port)
 
 
 if __name__ == '__main__':

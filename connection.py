@@ -1,6 +1,7 @@
 import socket
 import os
 import sys
+from socketModule import socketModule
 
 
 def do_connect(port):
@@ -31,12 +32,12 @@ def test_connect(socket_port):
         return False
 
 
-def turn_on_java_machine(socket_port):
-    SERVER_SOCKET_PORT = 10100
+def turn_on_htm_server(socket_port):
+    SOCKET_SERVER_PORT = 10100
     host = "localhost"
     sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     try:
-        sock.connect((host, SERVER_SOCKET_PORT))
+        sock.connect((host, SOCKET_SERVER_PORT))
         sock.sendall(bytes("runServer:%s\n" % socket_port, 'UTF-8'))
     except ConnectionRefusedError:
         pass
@@ -44,7 +45,7 @@ def turn_on_java_machine(socket_port):
         sock.close()
 
 
-def stop_java_server(socket_port):
+def stop_htm_server(socket_port):
     host = "localhost"
     sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     try:
@@ -65,26 +66,10 @@ def send(socket_port, data):
 
 
 def receive(socket_port):
-    host = "localhost"
-    sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    client=socketModule()
+    obj=client.sendRqst("localhost",socket_port,bytes("get:", 'UTF-8'))
 
-    end_message = "[THIS_IS_THE_END_HOLD_YOUR_BREATH_AND_COUNT_TO_TEN]"
-
-    try:
-        sock.connect((host, socket_port))
-        sock.sendall(bytes("get" + "\n", 'UTF-8'))
-
-        data = ""
-
-        while data.find(end_message) == -1:
-            data += sock.recv(1024).decode('utf-8')
-        data = data.replace(end_message, "")
-    except ConnectionRefusedError:
-        data = "{'data':'0'}"
-    finally:
-        sock.close()
-
-    return data
+    return obj
 
 
 if __name__ == '__main__':

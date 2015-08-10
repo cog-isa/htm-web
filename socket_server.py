@@ -1,14 +1,16 @@
+import shutil
 import socket
 import os
 import threading
+from htm_server import htm_server
 
-
-def start_java_socket_server(port):
-    os.system("java -jar jv/target/go-1.0.jar %s" % port)
+def start_htm_server(port):
+    s=htm_server(port)
+    s.start()
 
 
 def main():
-    SOCKET_PORT = 11100
+    SOCKET_PORT = 10100
 
     sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     server_address = ('localhost', SOCKET_PORT)
@@ -24,7 +26,7 @@ def main():
         if data.find('runServer:') != -1:
             port = int(data[len('runServer:'):])
             print(port)
-            thread = threading.Thread(target=start_java_socket_server, args=(port,))
+            thread = threading.Thread(target=start_htm_server, args=(port,))
             thread.daemon = True
             thread.start()
 

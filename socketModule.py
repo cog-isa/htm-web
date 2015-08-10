@@ -10,6 +10,8 @@ class socketModule:
         self.sock.bind(server_address)
         self.sock.listen(1)
 
+
+
     def waitForRqst(self, handle):
         connection, client_address = self.sock.accept()
         data = bytes()

@@ -3,9 +3,9 @@ import pickle
 import HTMSettings
 from htm__region import Region
 from mappers.VerySimpleMapper import verySimpleMapper
-from region import Region
+import spatialPooler.region as sp
 from socketModule import socketModule
-from spatialPooler import SpatialPooler
+from spooler import SpatialPooler
 import temporalPooler.htm__region as tp
 
 
@@ -15,16 +15,13 @@ __author__ = 'AVPetrov'
 from settings import *
 
 def handle(data,answer):
-    if(data.decode('utf-8')):
+    if(data.decode('utf-8')=="get:"):
         return pickle.dumps(answer, pickle.HIGHEST_PROTOCOL)
     else:
-        return "UNKNOW REQUEST"
+        return "404"
 
 server=socketModule()
 server.openLocalPort(11101)
-
-
-
 
 def toVector(m):
     output=[]
@@ -54,7 +51,7 @@ setting.initialInhibitionRadius=1
 setting.cellsPerColumn=5
 
 
-r = Region(setting,verySimpleMapper())
+r = sp.Region(setting,verySimpleMapper())
 r_t=tp.Region(setting.xDimension, setting.cellsPerColumn)
 sp=SpatialPooler(setting)
 

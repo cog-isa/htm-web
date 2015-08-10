@@ -7,7 +7,7 @@ __author__ = 'AVPetrov'
 
 def test_get_tpregion():
     client=socketModule()
-    obj=client.sendRqst("localhost",11101,bytes("get:\n", 'UTF-8'))
+    obj=client.sendRqst("localhost",11101,bytes("get:", 'UTF-8'))
     print(obj)
     obj.out_prediction()
 

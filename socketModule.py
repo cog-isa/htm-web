@@ -1,3 +1,5 @@
+import jsonpickle
+
 __author__ = 'gmdidro'
 import pickle
 import socket
@@ -19,10 +21,10 @@ class socketModule:
         connection, client_address = self.sock.accept()
         data = bytes()
         data += connection.recv(512)
-        answer=pickle.dumps(handle(data), pickle.HIGHEST_PROTOCOL)
+        answer=jsonpickle.encode(handle(data))
 
         end_message = "[THIS_IS_THE_END_HOLD_YOUR_BREATH_AND_COUNT_TO_TEN]"
-        connection.sendall(answer)
+        connection.sendall(bytes(answer, 'UTF-8'))
         connection.sendall(bytes(end_message, 'UTF-8'))
         connection.close()
 
@@ -33,17 +35,21 @@ class socketModule:
         self.sock.sendall(cmd)
         end_message = "[THIS_IS_THE_END_HOLD_YOUR_BREATH_AND_COUNT_TO_TEN]"
 
-        data = bytes()
+        data = ""
 
         while True:
-            q = self.sock.recv(1024)
             try:
-                if q.decode('utf-8').find(end_message) == -1:
+                q = self.sock.recv(1024).decode('utf-8')
+                data = data + q
+                if q.find(end_message) != -1:
                     break
             except UnicodeDecodeError:
+                print("UnicodeDecodeError")
                 pass
-            data += q
+
+        end_start=data.find(end_message)
+        data=data[:end_start]
 
         self.sock.close()
-        obj = pickle.loads(data)
-        return obj
+        # obj = jsonpickle.decode(data)
+        return data

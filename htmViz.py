@@ -6,9 +6,8 @@ from models import User
 from utils import get_hash
 from peewee import DoesNotExist
 from flask import jsonify
-
-
 import connection
+
 
 
 app = Flask(__name__)
@@ -45,9 +44,9 @@ def turn_on_java_server():
         # res = connection.receive(port)
             # else:
             #     print("no_connection")
-
     print(res)
-    return jsonify(json.dumps(res))
+    return res
+
 
 @app.route('/get_data_from_htm/')
 def get_data_from_htm():
@@ -56,7 +55,8 @@ def get_data_from_htm():
         port = user.port
         res=connection.receive(port)
         print(res)
-        return jsonify(json.dumps(res))
+        return res
+
 
 @app.route('/stop_java_server/', methods=['POST'])
 def stop_java_server():
@@ -106,4 +106,3 @@ if __name__ == '__main__':
     # turn_off_all_java_machines()
 
     app.run()
-

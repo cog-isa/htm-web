@@ -26,6 +26,7 @@ from socketModule import socketModule
 def turn_on_htm_server(socket_port):
     SOCKET_SERVER_PORT = 10100
     client=socketModule()
+    obj="None"
     try:
         obj=client.sendRqst("localhost",SOCKET_SERVER_PORT,bytes("runServer:%s\n" % socket_port, 'UTF-8'))
     except ConnectionRefusedError:
@@ -35,14 +36,14 @@ def turn_on_htm_server(socket_port):
         return obj
 
 
-# def stop_htm_server(socket_port):
-#     client=socketModule()
-#     try:
-#         obj=client.sendRqst("localhost",socket_port,bytes("exit", 'UTF-8'))
-#     except ConnectionRefusedError:
-#         client.close()
-#         return False
-#     return True
+def stop_htm_server(socket_port):
+    client=socketModule()
+    try:
+        obj=client.sendRqst("localhost",socket_port,bytes("exit", 'UTF-8'))
+    except ConnectionRefusedError:
+        client.close()
+        return False
+    return True
 
 
 # def send(socket_port, data):

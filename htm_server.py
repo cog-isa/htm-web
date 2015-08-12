@@ -1,4 +1,6 @@
+from enum import Enum
 import pickle
+from flask import jsonify
 import HTMSettings
 from mappers.VerySimpleMapper import verySimpleMapper
 from socketModule import socketModule
@@ -11,12 +13,22 @@ __author__ = 'AVPetrov'
 
 # реализует ответ на запрос - Дай состояние и сделай шаг вперед
 class htm_server:
+    class StatusEnum(Enum):
+        exit=-1
+        none=0
+        work=1
+
     def __init__(self,port):
         self.port=port
 
+    status=StatusEnum.none
+
     def handle(self,data,answer):
-        if(data.decode('utf-8')=="get"):
+        data=data.decode('utf-8')
+        if(data=="get"):
             return answer
+        elif(data=="exit"):
+            return "exit"
         else:
             return {"status":404}
 
@@ -72,3 +84,9 @@ class htm_server:
             r_t.out_prediction()
             generator.move()
             server.waitForRqst(lambda data: self.handle(data,r_t))
+
+
+if __name__ == "__main__":
+    print("Testing")
+    server=htm_server(55555)
+    server.start()

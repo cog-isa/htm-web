@@ -6,9 +6,11 @@ from models import User
 from utils import get_hash
 from peewee import DoesNotExist
 from flask import jsonify
-import connection
+import jsonpickle
+from flask import Response
+from sockets import SocketClient
 
-
+from htm_core_class import HTMCore
 
 app = Flask(__name__)
 
@@ -37,15 +39,19 @@ def turn_on_java_server():
     if 'user_mail' in session:
         user = User.get(User.mail == session['user_mail'])
         port = user.port
-        # if connection.test_connect(port) == False:
-        res=connection.turn_on_htm_server(port)
-        # while not connection.test_connect(port):
-        #     pass
-        # res = connection.receive(port)
-            # else:
-            #     print("no_connection")
-    print(res)
-    return res
+        # res=connection.turn_on_htm_server(port)
+        # временная заглушка
+        # core = HTMCore()
+        # res=jsonpickle.encode(core)
+        # print(res)
+        client = SocketClient(10100)
+        client.request(port)
+        client.close()
+        client = SocketClient(port)
+        res = client.request("")
+        client.close()
+
+    return Response(response=res, status=200, mimetype="application/json")
 
 
 @app.route('/get_data_from_htm/')

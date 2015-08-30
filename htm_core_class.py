@@ -1,4 +1,4 @@
-import HTMSettings
+from sp_settings import HTMSettings
 from spooler import SpatialPooler
 import htm__region as tp
 from settings import *
@@ -9,25 +9,25 @@ class HTMCore:
     def __init__(self):
         self.generator = MakeBubble(GENERATOR, REGION_SIZE_N, SCALE)
 
-        setting = HTMSettings.HTMSettings.getDefaultSettings()
+        setting = HTMSettings.get_default_settings()
         setting.debug = True
 
-        setting.activationThreshold = 1
-        setting.minOverlap = 1
-        setting.desiredLocalActivity = 3
-        setting.connectedPct = 1
-        setting.xInput = REGION_SIZE_N * SCALE
-        setting.yInput = REGION_SIZE_N * SCALE
-        setting.potentialRadius = 2
-        setting.xDimension = 1
-        setting.yDimension = 1
-        setting.initialInhibitionRadius = 1
-        setting.cellsPerColumn = 5
+        setting.activation_threshold = 1
+        setting.min_overlap = 1
+        setting.desired_local_activity = 3
+        setting.connectet_Pct = 1
+        setting.xinput = REGION_SIZE_N * SCALE
+        setting.yinput = REGION_SIZE_N * SCALE
+        setting.potential_radius = 2
+        setting.xdimension = 1
+        setting.ydimension = 1
+        setting.initial_inhibition_radius = 1
+        setting.cells_per_column = 5
 
         self.temporal_pooler = TemporalPoolerRegion(REGION_SIZE_N * SCALE, COLUMN_SIZE)
 
 
-        r_t = tp.Region(setting.xDimension, setting.cellsPerColumn)
+        r_t = tp.Region(setting.xdimension, setting.cells_per_column)
         self.spatial_pooler = SpatialPooler(setting)
 
 

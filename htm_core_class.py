@@ -1,4 +1,3 @@
-from sp_settings import HTMSettings
 from spooler import SpatialPooler
 import htm__region as tp
 from settings import *
@@ -9,7 +8,7 @@ class HTMCore:
     def __init__(self):
         self.generator = MakeBubble(GENERATOR, REGION_SIZE_N, SCALE)
 
-        setting = HTMSettings.get_default_settings()
+        setting = SpatialSettings.get_default_settings()
         setting.debug = True
 
         setting.activation_threshold = 1

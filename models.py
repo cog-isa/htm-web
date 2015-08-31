@@ -42,8 +42,8 @@ def create_relations():
     admin_user = User(mail="admin@admin.ru", password=get_hash('1'), port=56001)
     admin_user.save()
 
-    # test_user = User(mail="test@test.ru", password=get_hash('1'), port=9701)
-    # test_user.save()
+    test_user = User(mail="test@test.ru", password=get_hash('1'), port=9701)
+    test_user.save()
 
 
 if __name__ == '__main__':

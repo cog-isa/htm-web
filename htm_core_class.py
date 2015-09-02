@@ -30,6 +30,9 @@ class HTMCore:
         setting.xdimension = temporal_settings.REGION_SIZE_N
         setting.ydimension = temporal_settings.REGION_SIZE_N
 
+        # TODO все-таки нужно найти где этот радиус задается в настройках и как передается...
+        # может быть проблема в синхронизации htm-core
+        setting.potential_radius = 1
         # TODO написать человеческие имена для переменных
         self.r = Region(setting, SquareMapper)
         self.temporal_pooler = tp.Region(setting.xdimension, setting.cells_per_column)

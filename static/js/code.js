@@ -4,10 +4,9 @@ function create_element(element_name, element_text) {
     return element.firstChild;
 }
 
-function clear_viz() {
-    var viz = document.getElementById("viz");
-    viz.innerHTML = '';
-
+function clear_element(element_id) {
+    var element = document.getElementById(element_id);
+    element.innerHTML = '';
 }
 
 function do_go() {
@@ -15,12 +14,9 @@ function do_go() {
         text: "hello"
     }).done(function (json) {
 
-            clear_viz();
-            debug_add_line(json["temporal_pooler"]);
+            clear_element("viz");
             //console.log(json["temporal_pooler"]);
-            debug_add_line(json["temporal_pooler"]["columns"]);
             var region_size = json["temporal_pooler"]["region_size"];
-            //debug_add_line(region_size);
             var cells_size = json["temporal_pooler"]["columns"][0][0]["cells"].length;
             for (var i = 0; i < region_size; i++) {
 
@@ -29,7 +25,7 @@ function do_go() {
                     var column_str = '<div id="region_" class="thumbnail" style="display: inline-block; overflow-x: auto; overflow-y: hidden; margin: 0; height:50px; width:50px;"></div>';
                     var column = create_element("column_", column_str);
                     document.getElementById("viz").appendChild(column);
-                    for(var k = 0; k < cells_size; k++) {
+                    for (var k = 0; k < cells_size; k++) {
 
                         var cell_str = '';
                         if (json["temporal_pooler"]["columns"][i][j]["cells"][k]["state"] == 1)
@@ -47,6 +43,44 @@ function do_go() {
                 var tr_element = create_element("column_", tr);
                 document.getElementById("viz").appendChild(tr_element);
             }
+
+            clear_element("input_data");
+
+            console.log(json["input"]);
+            for(var i = 0; i < json["input"].length; i++) {
+                for (var j = 0; j < json["input"][i].length; j++) {
+
+                    var cell_str1 = '<a href="PASSIVE" class="thumbnail"style="display: inline-flex; overflow-x: auto;  margin: 0"></a>';
+                        if (json["input"][i][j] == 1)
+                            cell_str1 = '<a href="ACTIVE" class="thumbnail btn-success"style="display: inline-flex; overflow-x: auto;  margin: 0"></a>';
+                    var cell_elem2 = create_element("cell_", cell_str1);
+
+                    document.getElementById("input_data").appendChild(cell_elem2);
+                }
+                var tr1 = '<br>';
+                var tr_element1 = create_element("column_", tr1);
+                document.getElementById("input_data").appendChild(tr_element1);
+            }
+
+
+            clear_element("compress_input");
+
+            console.log(json["compress_input"]);
+            for(var i = 0; i < json["compress_input"].length; i++) {
+                for (var j = 0; j < json["compress_input"][i].length; j++) {
+
+                    var cell_str11 = '<a href="PASSIVE" class="thumbnail"style="display: inline-flex; overflow-x: auto;  margin: 0"></a>';
+                        if (json["compress_input"][i][j] == 1)
+                            cell_str11 = '<a href="ACTIVE" class="thumbnail btn-success"style="display: inline-flex; overflow-x: auto;  margin: 0"></a>';
+                    var cell_elem22 = create_element("cell_", cell_str11);
+
+                    document.getElementById("compress_input").appendChild(cell_elem22);
+                }
+                var tr12 = '<br>';
+                var tr_element12 = create_element("column_", tr12);
+                document.getElementById("compress_input").appendChild(tr_element12);
+            }
+
         }
     )
     ;

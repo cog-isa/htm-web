@@ -22,8 +22,6 @@ def htm_main():
 
 @app.route('/htmSettings/')
 def htm_settings():
-    if 'username' in session:
-        print(session['username'])
     return render_template("htmSettings.html")
 
 

@@ -2,7 +2,7 @@ import json
 from flask import Flask, request, redirect, url_for
 from flask.templating import render_template
 from flask import session
-from models import User
+from models import User, RunSettings
 from utils import get_hash
 from peewee import DoesNotExist
 from flask import jsonify
@@ -22,9 +22,19 @@ def htm_main():
 
 @app.route('/htmSettings/')
 def htm_settings():
-    if 'username' in session:
-        print(session['username'])
-    return render_template("htmSettings.html")
+    if 'user_mail' in session:
+        user = User.get(User.mail == session['user_mail'])
+        print(user.get_id())
+        settings=[]
+        try:
+            settings=RunSettings.select().where(RunSettings.user==user.get_id()).get()
+        except RunSettings.DoesNotExist:
+            print("RunSettings empty")
+        else:
+            print(settings.json_string)
+
+
+    return render_template("htmSettings.html",settings=settings)
 
 
 @app.route('/htmRun/')

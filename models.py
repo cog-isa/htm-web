@@ -1,4 +1,4 @@
-from peewee import Model, CharField, SqliteDatabase, OperationalError
+from peewee import Model, CharField, SqliteDatabase, OperationalError, ForeignKeyField, TextField
 from utils import get_hash
 from peewee import IntegerField
 
@@ -13,7 +13,9 @@ class User(Model):
 
 
 class RunSettings(Model):
-    settings_field1 = CharField()
+    json_string = TextField()
+    name = CharField()
+    user = ForeignKeyField(User)
 
     class Meta:
         database = SqliteDatabase('data.db')

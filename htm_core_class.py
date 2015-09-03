@@ -1,33 +1,58 @@
 from spooler import SpatialPooler
 import htm__region as tp
 from settings import *
-from htm__region import Region as TemporalPoolerRegion
+from spatialPooler.mappers.sp_square_mapper import SquareMapper
+from spatialPooler.sp_region import Region
+
+
+def to_vector(m):
+    output = []
+    for i in m:
+        for j in i:
+            output.append(j)
+    return output
+
+
+def to_matrix(region):
+    return [[region.get_columns()[j * region.get_col_h() + i].get_is_active() for i in range(region.get_col_h())] for j
+            in range(region.get_col_w())]
 
 
 class HTMCore:
     def __init__(self):
-        self.generator = MakeBubble(temporal_settings.GENERATOR, temporal_settings.REGION_SIZE_N, temporal_settings.SCALE)
+        self.generator = MakeBubble(temporal_settings.GENERATOR, temporal_settings.REGION_SIZE_N,
+                                    temporal_settings.SCALE)
 
-        setting = SpatialSettings.get_default_settings()
-        setting.debug = True
+        setting = spatial_settings
 
-        setting.activation_threshold = 1
-        setting.min_overlap = 1
-        setting.desired_local_activity = 3
-        setting.connectet_Pct = 1
         setting.xinput = temporal_settings.REGION_SIZE_N * temporal_settings.SCALE
         setting.yinput = temporal_settings.REGION_SIZE_N * temporal_settings.SCALE
-        setting.potential_radius = 2
-        setting.xdimension = 1
-        setting.ydimension = 1
-        setting.initial_inhibition_radius = 1
-        setting.cells_per_column = 5
+        setting.xdimension = temporal_settings.REGION_SIZE_N
+        setting.ydimension = temporal_settings.REGION_SIZE_N
 
-        self.temporal_pooler = TemporalPoolerRegion(temporal_settings.REGION_SIZE_N * temporal_settings.SCALE, temporal_settings.COLUMN_SIZE)
-
-
-        r_t = tp.Region(setting.xdimension, setting.cells_per_column)
+        # TODO все-таки нужно найти где этот радиус задается в настройках и как передается...
+        # может быть проблема в синхронизации htm-core
+        setting.potential_radius = 1
+        # TODO написать человеческие имена для переменных
+        self.r = Region(setting, SquareMapper)
+        self.temporal_pooler = tp.Region(setting.xdimension, setting.cells_per_column)
+        # не стоит это сереализовывать
         self.spatial_pooler = SpatialPooler(setting)
+        self.input = None
+        self.compress_input = None
 
+    def move(self):
+        self.input = self.generator.get_data()
+        inp = to_vector(self.generator.get_data())
 
+        ov = self.spatial_pooler.update_overlaps(self.r.get_columns(), inp)
+        self.spatial_pooler.inhibition_phase(self.r.get_columns(), ov)
 
+        self.compress_input = to_matrix(self.r)
+
+        self.temporal_pooler.step_forward(self.compress_input)
+        self.generator.move()
+
+if __name__ == "__main__":
+    htm = HTMCore()
+    htm.move()

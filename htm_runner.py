@@ -7,16 +7,31 @@ import jsonpickle
 active_ports = set()
 
 
-def start_htm(port):
+class HTMSerialization:
+    pass
+
+
+def start_htm(server_port):
     htm = HTMCore()
-    server = SocketServer(port)
+    # десиреализовать объект из строки - jsonpickle.decode(s)
+
+    server = SocketServer(server_port)
 
     while True:
-        message = server.receive_message()
-        htm.temporal_pooler.step_forward(htm.generator.get_data())
-        htm.generator.move()
-        server.send_message(jsonpickle.encode(htm))
-        print(jsonpickle.encode(htm))
+        # сообщение в будущем нужно будет обрабатывать
+        # message = server.receive_message()
+        server.receive_message()
+
+        # сериализуем нужные нам части в объекте HTMSerialization
+        htm_serialization = HTMSerialization()
+        htm.move()
+        htm_serialization.input = htm.input
+        htm_serialization.compress_input = htm.compress_input
+        htm_serialization.temporal_pooler = htm.temporal_pooler
+
+        server.send_message(jsonpickle.encode(htm_serialization))
+        print(jsonpickle.encode(htm_serialization))
+
 
 runner_server = SocketServer(10100)
 

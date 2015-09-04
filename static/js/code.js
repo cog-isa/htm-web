@@ -115,14 +115,14 @@ function clear_all_dendrites() {
 }
 
 function show_dendrites(id) {
-    // TODO Любой кликабельный объект должен быть не меньше курсора,подумать над гуи
-    //debug_add_line(id);
     clear_all_dendrites();
     var cell = get_cell_by_id(id);
     for (var i = 0; i < cell["dendrites"].length; i++) {
-        for (var j = 0; j < cell["dendrites"][i]["synapses"].length; j++) {
-            var id_to = cell["dendrites"][i]["synapses"][j]["id_to"];
-            document.getElementById(id_to).style.borderColor = "red";
+        if (cell["dendrites"][i]["was_active"]) {
+            for (var j = 0; j < cell["dendrites"][i]["synapses"].length; j++) {
+                var id_to = cell["dendrites"][i]["synapses"][j]["id_to"];
+                document.getElementById(id_to).style.borderColor = "red";
+            }
         }
     }
 }

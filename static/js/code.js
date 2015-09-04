@@ -55,9 +55,9 @@ function do_go() {
             for (var i = 0; i < json["input"].length; i++) {
                 for (var j = 0; j < json["input"][i].length; j++) {
 
-                    var cell_str1 = '<a href="PASSIVE" class="thumbnail"style="display: inline-flex; overflow-x: auto;  margin: 0"></a>';
+                    var cell_str1 = '<a href="PASSIVE" class="thumbnail"style="display: inline-flex; overflow-x: auto;  margin: 2px"></a>';
                     if (json["input"][i][j] == 1)
-                        cell_str1 = '<a href="ACTIVE" class="thumbnail btn-success"style="display: inline-flex; overflow-x: auto;  margin: 0"></a>';
+                        cell_str1 = '<a href="ACTIVE" class="thumbnail btn-success"style="display: inline-flex; overflow-x: auto;  margin: 2px"></a>';
                     var cell_elem2 = create_element("cell_", cell_str1);
 
                     document.getElementById("input_data").appendChild(cell_elem2);
@@ -74,9 +74,9 @@ function do_go() {
             for (var i = 0; i < json["compress_input"].length; i++) {
                 for (var j = 0; j < json["compress_input"][i].length; j++) {
 
-                    var cell_str11 = '<a href="PASSIVE" class="thumbnail"style="display: inline-flex; overflow-x: auto;  margin: 0"></a>';
+                    var cell_str11 = '<a href="PASSIVE" class="thumbnail"style="display: inline-flex; overflow-x: auto;  margin: 2px"></a>';
                     if (json["compress_input"][i][j] == 1)
-                        cell_str11 = '<a href="ACTIVE" class="thumbnail btn-success"style="display: inline-flex; overflow-x: auto;  margin: 0"></a>';
+                        cell_str11 = '<a href="ACTIVE" class="thumbnail btn-success"style="display: inline-flex; overflow-x: auto;  margin: 2px"></a>';
                     var cell_elem22 = create_element("cell_", cell_str11);
 
                     document.getElementById("compress_input").appendChild(cell_elem22);

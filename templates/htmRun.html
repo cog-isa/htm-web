@@ -1,5 +1,9 @@
 {% extends "basic.html" %}
 
+{% block head_js %}
+     <script type="text/javascript" src="{{ url_for('static', filename='js/code.js') }}"></script>
+{% endblock %}
+
 {% block body %}
 
     <div class="panel-body">

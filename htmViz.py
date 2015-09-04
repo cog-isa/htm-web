@@ -22,19 +22,19 @@ def htm_main():
 
 @app.route('/htmSettings/')
 def htm_settings():
+    settings=[]
+
     if 'user_mail' in session:
         user = User.get(User.mail == session['user_mail'])
         print(user.get_id())
-        settings=[]
         try:
-            settings=RunSettings.select().where(RunSettings.user==user.get_id()).get()
+            res=RunSettings.select().where(RunSettings.user==user.get_id())
+            for set in res:
+                settings.append(set)
         except RunSettings.DoesNotExist:
             print("RunSettings empty")
-        else:
-            print(settings.json_string)
 
-
-    return render_template("htmSettings.html",settings=settings)
+    return render_template("htmSettings.html", settings = settings)
 
 
 @app.route('/htmRun/')
@@ -114,6 +114,11 @@ def turn_off_all_java_machines():
     q = User.select()
     for i in q:
         connection.stop_htm_server(i.port)
+
+
+@app.route('/add_new_conf/')
+def add_new_conf():
+    RunSettings.create( json_string = '',  name = 'Новая конфигурация', user = User.get(User.mail == session['user_mail']))
 
 
 if __name__ == '__main__':

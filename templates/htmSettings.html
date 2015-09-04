@@ -1,21 +1,43 @@
 {% extends "basic.html" %}
 
+{% block head_js %}
+    <script type="text/javascript" src="{{ url_for('static', filename='js/htmSettings.js') }}"></script>
+{% endblock %}
+
 {% block body %}
-    <div class="panel panel-default col-md-8 col-md-push-2 panel-primary htm_viz_pick_settings" >
-        <div class="panel-heading">
-            <h3 class="panel-title">Список доступных конфигураций </h3>
+
+<div class="panel-group col-md-8 col-md-push-2 htm_viz_pick_settings panel-primary" id="accordion" role="tablist" aria-multiselectable="true">
+    <div class="panel-heading">
+
+        <div class="btn-group pull-right">
+            <button type="button" id="myButton" data-loading-text="Добавляем..." class="btn btn-primary" autocomplete="off">
+               Добавить конфигурацию
+            </button>
         </div>
-
-        {% for i in settings %}
-
-        <div class="list-group">
-            <a href="#" class="list-group-item ">
-                <h4 class="list-group-item-heading">{{ i }} конфигурация пользователя</h4>
-
-                <p class="list-group-item-text">...</p>
-            </a>
-        </div>
-
-    {% endfor %}
+        <h3 class="panel-title">Список доступных конфигураций </h3>
     </div>
+
+    {% set i=0 %}
+    {% for s in settings %}
+        <div class="panel panel-default">
+        <div class="panel-heading" role="tab" id="heading{{i}}">
+          <h4 class="panel-title">
+            <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapse{{i}}" aria-expanded="true" aria-controls="collapse{{i}}">
+              {{ s.name }}
+            </a>
+          </h4>
+        </div>
+        <div id="collapse{{i}}" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="heading{{i}}">
+          <div class="panel-body">
+            {{ s.json_string }}
+          </div>
+        </div>
+        </div>
+        {% set i=i+1 %}
+    {% endfor %}
+</div>
+
+
+
+
 {% endblock %}

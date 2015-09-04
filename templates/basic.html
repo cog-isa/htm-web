@@ -21,7 +21,11 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
 
     <link rel="stylesheet" href="{{ url_for('static', filename='stylesheets/style.css') }}" />
-    <script type="text/javascript" src="{{ url_for('static', filename='js/code.js') }}"></script>
+
+    {% block head_js %}
+    {% endblock %}
+
+
 
 
 </head>
@@ -112,10 +116,6 @@
 
 {% endif %}
 
-{% block connectJS %}
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
-{% endblock %}
 
 </body>
 </html>

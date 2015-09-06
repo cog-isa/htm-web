@@ -30,8 +30,8 @@
 <body>
 
 <div class="col-md-offset-1 col-md-10">
-{% if not session['user_mail'] %}
-    {#block not sign in #}
+    {% if not session['user_mail'] %}
+        {#block not sign in #}
 
         <nav class="navbar navbar-default">
             <div class="container-fluid">
@@ -56,10 +56,10 @@
             <img src='/static/net.jpg'>
         </div>
 
-{% else %}
-    {#main user block#}
-    {% block upper %}
-        <nav class="navbar navbar-default">
+    {% else %}
+        {#main user block#}
+        {% block upper %}
+            <nav class="navbar navbar-default">
 
                 <div class="navbar-header">
                     <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
@@ -105,14 +105,14 @@
                     </form>
 
                 </div>
-        </nav>
-    {% endblock %}
+            </nav>
+        {% endblock %}
 
-    {% block body %}
+        {% block body %}
 
-    {% endblock %}
+        {% endblock %}
 
-{% endif %}
+    {% endif %}
 </div>
 
 </body>

@@ -107,7 +107,6 @@ function get_cell_by_id(id) {
 }
 
 function clear_all_dendrites() {
-    var json = json_store;
     var region_size = json_store["temporal_pooler"]["region_size"];
     var cells_size = json_store["temporal_pooler"]["columns"][0][0]["cells"].length;
     for (var i = 0; i < region_size; i++)
@@ -129,15 +128,6 @@ function show_dendrites(id) {
             }
         }
     }
-}
-
-function do_stop() {
-    $.post('/stop_java_server/', {
-        text: "hello"
-    }).done(function (data) {
-        clear_viz();
-        debug_add_line('Java машина остановлена');
-    });
 }
 
 function debug_add_line(line) {

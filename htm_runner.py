@@ -3,7 +3,6 @@ from sockets import SocketServer
 from htm_core_class import HTMCore
 import jsonpickle
 
-
 active_ports = set()
 
 

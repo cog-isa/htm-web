@@ -23,6 +23,12 @@
 }
 
 .htm_viz_pick_settings {
+    min-height:820px;
+}
+
+.htm_viz_settings_panel_heading
+{
+    padding-bottom: 20px;
     min-height: 820px;
 }
 

@@ -1,3 +1,10 @@
+import sys
+sys.path.insert(0, "htm-core/")
+sys.path.insert(0, "htm-core/spatialPooler")
+sys.path.insert(0, "htm-core/temporalPooler")
+sys.path.insert(0, "htm-core/gens")
+sys.path.insert(0, "htm-core/apps")
+
 import threading
 from sockets import SocketServer
 from htm_core_class import HTMCore

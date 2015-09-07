@@ -1,3 +1,6 @@
+import sys
+sys.path.insert(0, "htm-core/")
+
 from flask import Flask, request, redirect, url_for
 from flask.templating import render_template
 from flask import session

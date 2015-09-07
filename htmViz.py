@@ -101,7 +101,7 @@ def turn_off_all_java_machines():
         connection.stop_htm_server(i.port)
 
 
-@app.route('/add_new_conf/')
+@app.route('/add_new_conf/', methods=['POST'])
 def add_new_conf():
     RunSettings.create( json_string = '',  name = 'Новая конфигурация', user = User.get(User.mail == session['user_mail']))
     return 'OK'

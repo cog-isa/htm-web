@@ -1,5 +1,5 @@
 import json
-from flask import Flask, request, redirect, url_for, flash
+from flask import Flask, request, redirect, url_for
 from flask.templating import render_template
 from flask import session
 from htm_settings_form import SettingsForm
@@ -73,28 +73,6 @@ def turn_on_java_server():
     return Response(response=res, status=200, mimetype="application/json")
 
 
-@app.route('/get_data_from_htm/')
-def get_data_from_htm():
-    if 'user_mail' in session:
-        user = User.get(User.mail == session['user_mail'])
-        port = user.port
-        res=connection.receive(port)
-        print(res)
-        return res
-
-
-@app.route('/stop_java_server/', methods=['POST'])
-def stop_java_server():
-    if 'user_mail' in session:
-        user = User.get(User.mail == session['user_mail'])
-        port = user.port
-        if connection.test_connect(port):
-            connection.stop_htm_server(port)
-            print('stopped')
-
-    return jsonify({'data': str('ok')})
-
-
 @app.route('/login/', methods=['GET', 'POST'])
 def login():
     if request.method == 'POST':
@@ -125,7 +103,7 @@ def turn_off_all_java_machines():
         connection.stop_htm_server(i.port)
 
 
-@app.route('/add_new_conf/', methods=['POST'])
+@app.route('/add_new_conf/')
 def add_new_conf():
     RunSettings.create( json_string = '',  name = 'Новая конфигурация', user = User.get(User.mail == session['user_mail']))
     return 'OK'

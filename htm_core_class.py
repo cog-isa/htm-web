@@ -35,7 +35,7 @@ class HTMCore:
         setting.potential_radius = 1
         # TODO написать человеческие имена для переменных
         self.r = Region(setting, SquareMapper)
-        self.temporal_pooler = tp.Region(setting.xdimension, setting.cells_per_column)
+        self.temporal_pooler = tp.Region(setting.xdimension, temporal_settings.COLUMN_SIZE)
         # не стоит это сереализовывать
         self.spatial_pooler = SpatialPooler(setting)
         self.input = None

@@ -29,4 +29,32 @@
 .htm_viz_settings_panel_heading
 {
     padding-bottom: 20px;
+    min-height: 820px;
+}
+
+.htm_ceil {
+    display: inline-flex;
+    overflow-x: auto;
+    margin: 2px;
+    border-radius: 0;
+    padding: 10px;
+}
+
+.htm_column {
+    display: inline-block;
+    overflow-x: auto;
+    overflow-y: hidden;
+    margin: 0;
+    height: 62px;
+    width: 62px;
+    white-space: normal;
+}
+
+.htm_cell {
+    margin: 0;
+    overflow-x: auto;
+    overflow-y: hidden;
+    border-radius: 12px;
+    display: inline-flex;
+    padding: 7px;
 }

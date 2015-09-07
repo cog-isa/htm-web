@@ -1,13 +1,21 @@
 import sys
+from utils import get_hash
+sys.path.insert(0, "htm-web/")
 sys.path.insert(0, "htm-core/")
+sys.path.insert(0, "htm-core/spatialPooler")
+sys.path.insert(0, "htm-core/temporalPooler")
+sys.path.insert(0, "htm-core/gens")
+sys.path.insert(0, "htm-core/apps")
+
 
 import json
+import utils
 from flask import Flask, request, redirect, url_for
 from flask.templating import render_template
 from flask import session
 from htm_settings_form import SettingsForm
 from models import User, RunSettings
-from utils import get_hash
+
 from peewee import DoesNotExist
 from flask import jsonify
 import jsonpickle
@@ -15,6 +23,7 @@ from flask import Response
 from sockets import SocketClient
 
 from htm_core_class import HTMCore
+
 
 app = Flask(__name__)
 

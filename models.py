@@ -1,5 +1,5 @@
 from peewee import Model, CharField, SqliteDatabase, OperationalError, ForeignKeyField, TextField
-# from utils import get_hash
+from utils import get_hash
 from peewee import IntegerField
 
 

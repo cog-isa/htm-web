@@ -1,7 +1,8 @@
 import json
-from flask import Flask, request, redirect, url_for
+from flask import Flask, request, redirect, url_for, flash
 from flask.templating import render_template
 from flask import session
+from htm_settings_form import SettingsForm
 from models import User, RunSettings
 from utils import get_hash
 from peewee import DoesNotExist
@@ -20,7 +21,7 @@ def htm_main():
     return render_template("basic.html")
 
 
-@app.route('/htmSettings/')
+@app.route('/htmSettings/', methods=['GET','POST'])
 def htm_settings():
     settings=[]
 
@@ -34,7 +35,15 @@ def htm_settings():
         except RunSettings.DoesNotExist:
             print("RunSettings empty")
 
-    return render_template("htmSettings.html", settings = settings)
+        form = SettingsForm(request.form)
+        if request.method == 'POST' and form.validate():
+            #user = User(form.username.data, form.email.data,
+             #           form.password.data)
+            #db_session.add(user)
+            flash('Конфигурация сохранена')
+            return 'OK'
+
+    return render_template("htmSettings.html", settings = settings, form=form)
 
 
 @app.route('/htmRun/')
@@ -116,9 +125,16 @@ def turn_off_all_java_machines():
         connection.stop_htm_server(i.port)
 
 
-@app.route('/add_new_conf/')
+@app.route('/add_new_conf/', methods=['POST'])
 def add_new_conf():
     RunSettings.create( json_string = '',  name = 'Новая конфигурация', user = User.get(User.mail == session['user_mail']))
+    return 'OK'
+
+@app.route('/remove_conf/', methods=['POST'])
+def remove_conf():
+    q = RunSettings.delete().where(RunSettings.id == int(request.form['ident']))
+    q.execute()
+    return 'OK'
 
 
 if __name__ == '__main__':

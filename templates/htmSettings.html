@@ -1,3 +1,4 @@
+{% from "_formhelpers.html" import render_field %}
 {% extends "basic.html" %}
 
 {% block head_js %}
@@ -7,10 +8,10 @@
 {% block body %}
 
 <div class="panel-group col-md-8 col-md-push-2 htm_viz_pick_settings panel-primary" id="accordion" role="tablist" aria-multiselectable="true">
-    <div class="panel-heading">
+    <div class="panel-heading htm_viz_settings_panel_heading">
 
         <div class="btn-group pull-right">
-            <button type="button" id="myButton" data-loading-text="Добавляем..." class="btn btn-primary" autocomplete="off">
+            <button type="button" id="addConfButton" onclick="addNewConf()" data-loading-text="Добавляем..." class="btn btn-primary" autocomplete="off">
                Добавить конфигурацию
             </button>
         </div>
@@ -20,16 +21,26 @@
     {% set i=0 %}
     {% for s in settings %}
         <div class="panel panel-default">
-        <div class="panel-heading" role="tab" id="heading{{i}}">
+        <div class="panel-heading htm_viz_settings_panel_heading" role="tab" id="heading{{i}}">
           <h4 class="panel-title">
-            <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapse{{i}}" aria-expanded="true" aria-controls="collapse{{i}}">
+            <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapse{{i}}" aria-expanded="false" aria-controls="collapse{{i}}">
               {{ s.name }}
             </a>
+            <button type="button" id="removeConfButton" onclick="removeConf({{s.id}})" data-loading-text="Удаляем..." class="btn btn-primary pull-right" autocomplete="off">
+               Удалить
+            </button>
           </h4>
         </div>
-        <div id="collapse{{i}}" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="heading{{i}}">
+        <div id="collapse{{i}}" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading{{i}}">
           <div class="panel-body">
-            {{ s.json_string }}
+             <form action="" method="post" name="login">
+                {{ render_field(form.username) }}
+                 <span style="color: red;">{{ s.json_string }}</span>
+              <p><input type="submit" value="Сохранить"></p>
+             </form>
+
+
+
           </div>
         </div>
         </div>

@@ -11,7 +11,8 @@ function clear_element(element_id) {
 
 // хранит полученный json
 var json_store;
-
+var correctness_data = [[0, 0]];
+var temporal_error_chart = null;
 
 function draw_input_data() {
     clear_element("input_data");
@@ -91,9 +92,41 @@ function do_go() {
             draw_input_data();
             draw_compress_data();
             draw_temporal_pool();
+
+            correctness_data.push([correctness_data.length + 1, 100 * json_store["temporal_pooler"]["correctness"]]);
+            draw_temporal_error_chart();
         }
     )
     ;
+}
+
+function draw_temporal_error_chart() {
+    if (temporal_error_chart == null) {
+        temporal_error_chart = new google.charts.Line(document.getElementById('linechart_material'));
+    }
+    var data = new google.visualization.DataTable();
+    data.addColumn('number', 'Шаг алгоритма');
+    data.addColumn('number', 'Корректность предсказания');
+
+    data.addRows(correctness_data);
+
+    var options = {
+        chart: {
+            //title: '',
+            //subtitle: ''
+        },
+        width: 400,
+        height: 300,
+        axes: {
+          x: {
+            0: {side: 'top'}
+          }
+        }
+    };
+
+
+
+    temporal_error_chart.draw(data, options);
 }
 
 function get_cell_by_id(id) {

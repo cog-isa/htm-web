@@ -14,7 +14,6 @@ class User(Model):
 
 class RunSettings(Model):
     json_string = TextField()
-    name = CharField()
     user = ForeignKeyField(User)
 
     class Meta:

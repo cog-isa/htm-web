@@ -19,23 +19,24 @@
     </div>
 
     {% set i=0 %}
-    {% for s in settings %}
+    {% for form in settings %}
         <div class="panel panel-default">
         <div class="panel-heading htm_viz_settings_panel_heading" role="tab" id="heading{{i}}">
           <h4 class="panel-title">
             <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapse{{i}}" aria-expanded="false" aria-controls="collapse{{i}}">
-              {{ s.name }}
+              {{ form['data'].name.data  }}
             </a>
-            <button type="button" id="removeConfButton" onclick="removeConf({{s.id}})" data-loading-text="Удаляем..." class="btn btn-primary pull-right" autocomplete="off">
+            <button type="button" id="removeConfButton" onclick="removeConf({{form['id']}})" data-loading-text="Удаляем..." class="btn btn-primary pull-right" autocomplete="off">
                Удалить
             </button>
           </h4>
         </div>
         <div id="collapse{{i}}" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading{{i}}">
           <div class="panel-body">
-             <form action="" method="post" name="login">
-                {{ render_field(form.username) }}
-                 <span style="color: red;">{{ s.json_string }}</span>
+             <form action="/htmSettings/" method="post" name="htmSettings">
+               <input type="hidden" name="name" value="form-{{form['id']}}">
+                 {{ render_field(form['data'].name) }}
+                {{ render_field(form['data'].debug) }}
               <p><input type="submit" value="Сохранить"></p>
              </form>
 

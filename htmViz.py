@@ -1,4 +1,5 @@
 import sys
+from settingsform import SettingsForm
 from utils import get_hash
 sys.path.insert(0, "htm-web/")
 sys.path.insert(0, "htm-core/")
@@ -10,19 +11,22 @@ sys.path.insert(0, "htm-core/apps")
 
 import json
 import utils
-from flask import Flask, request, redirect, url_for
+from flask import Flask, request, redirect, url_for, flash
 from flask.templating import render_template
 from flask import session
 from models import User, RunSettings
 
 from peewee import DoesNotExist
 from flask import jsonify
-import jsonpickle
 from flask import Response
 from sockets import SocketClient
 
 from htm_core_class import HTMCore
+import wtforms_json
 
+#  In order to start using WTForms-JSON, you need to first initialize the extension.
+#  This monkey patches some classes and methods within WTForms and adds JSON handling support
+wtforms_json.init()
 
 app = Flask(__name__)
 
@@ -38,24 +42,25 @@ def htm_settings():
 
     if 'user_mail' in session:
         user = User.get(User.mail == session['user_mail'])
-        print(user.get_id())
+
+        if request.method == 'POST':# and form.validate():
+            form = SettingsForm(request.form)
+            set = RunSettings.select().where(RunSettings.id == int(request.form['name'].split('form-')[1])).get()
+            set.json_string = json.dumps(form.data)
+            set.save()
+            flash('Конфигурация сохранена')
+
         try:
             res=RunSettings.select().where(RunSettings.user==user.get_id())
             for set in res:
-                settings.append(set)
+                # print(json.loads(set.json_string))
+                settings.append({"id":set.id, "data":SettingsForm.from_json(json.loads(set.json_string), skip_unknown_keys=False)})
         except RunSettings.DoesNotExist:
             print("RunSettings empty")
+        return render_template("htmSettings.html", settings = settings)
 
-        form = SettingsForm(request.form)
-        if request.method == 'POST' and form.validate():
-            #user = User(form.username.data, form.email.data,
-             #           form.password.data)
-            #db_session.add(user)
-            flash('Конфигурация сохранена')
-            return 'OK'
-
-    return render_template("htmSettings.html", settings = settings, form=form)
-
+    else:
+        return render_template("401.html")
 
 @app.route('/htmRun/')
 def htm_run():

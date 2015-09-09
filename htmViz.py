@@ -5,7 +5,6 @@ import json
 from flask import Flask, request, redirect, url_for
 from flask.templating import render_template
 from flask import session
-from htm_settings_form import SettingsForm
 from models import User, RunSettings
 from utils import get_hash
 from peewee import DoesNotExist

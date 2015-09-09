@@ -1,3 +1,5 @@
+__author__ = 'AVPetrov'
+
 from wtforms import Form, BooleanField, StringField, PasswordField, validators
 
 class SettingsForm(Form):

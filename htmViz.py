@@ -58,8 +58,6 @@ def htm_settings():
                 if set.json_string != "":
                     f = SettingsForm.from_json(json.loads(set.json_string), skip_unknown_keys=True)
 
-                if f.setname.data=="" : f.setname.data="Default name"
-
                 settings.append({"id":set.id, "data":f})
 
         except RunSettings.DoesNotExist:

@@ -24,7 +24,7 @@
         <div class="panel-heading htm_viz_settings_panel_heading" role="tab" id="heading{{i}}">
           <h4 class="panel-title">
             <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapse{{i}}" aria-expanded="false" aria-controls="collapse{{i}}">
-              {{ form['data'].name.data  }}
+              {{ form['data'].setname.data  }}
             </a>
             <button type="button" id="removeConfButton" onclick="removeConf({{form['id']}})" data-loading-text="Удаляем..." class="btn btn-primary pull-right" autocomplete="off">
                Удалить
@@ -35,8 +35,24 @@
           <div class="panel-body">
              <form action="/htmSettings/" method="post" name="htmSettings">
                <input type="hidden" name="name" value="form-{{form['id']}}">
-                 {{ render_field(form['data'].name) }}
-                {{ render_field(form['data'].debug) }}
+                 {{ render_field(form['data'].setname) }}
+                 {{ render_field(form['data'].debug) }}
+                 {{ render_field(form['data'].activation_threshold) }}
+                 {{ render_field(form['data'].min_overlap) }}
+                 {{ render_field(form['data'].desired_local_activity) }}
+                 {{ render_field(form['data'].connected_pct) }}
+                 {{ render_field(form['data'].connected_perm) }}
+                 {{ render_field(form['data'].xinput) }}
+                 {{ render_field(form['data'].yinput) }}
+                 {{ render_field(form['data'].potential_radius) }}
+                 {{ render_field(form['data'].xdimension) }}
+                 {{ render_field(form['data'].ydimension) }}
+                 {{ render_field(form['data'].initial_inhibition_radius) }}
+                 {{ render_field(form['data'].permanence_inc) }}
+                 {{ render_field(form['data'].permanence_dec) }}
+                 {{ render_field(form['data'].cells_per_column) }}
+                 {{ render_field(form['data'].max_boost) }}
+                 {{ render_field(form['data'].min_duty_cycle_fraction) }}
               <p><input type="submit" value="Сохранить"></p>
              </form>
 

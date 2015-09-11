@@ -20,13 +20,13 @@ def to_matrix(region):
 
 class HTMCore:
     def __init__(self):
-        self.generator = MakeBubble(temporal_settings.GENERATOR, temporal_settings.REGION_SIZE_N,
-                                    temporal_settings.SCALE)
+        self.generator = MakeBubble(input_settings.GENERATOR, temporal_settings.REGION_SIZE_N,
+                                    input_settings.SCALE)
 
         setting = spatial_settings
 
-        setting.xinput = temporal_settings.REGION_SIZE_N * temporal_settings.SCALE
-        setting.yinput = temporal_settings.REGION_SIZE_N * temporal_settings.SCALE
+        setting.xinput = temporal_settings.REGION_SIZE_N * input_settings.SCALE
+        setting.yinput = temporal_settings.REGION_SIZE_N * input_settings.SCALE
         setting.xdimension = temporal_settings.REGION_SIZE_N
         setting.ydimension = temporal_settings.REGION_SIZE_N
 

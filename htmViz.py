@@ -54,7 +54,14 @@ def htm_settings():
             res=RunSettings.select().where(RunSettings.user==user.get_id())
             for set in res:
                 # print(json.loads(set.json_string))
-                settings.append({"id":set.id, "data":SettingsForm.from_json(json.loads(set.json_string), skip_unknown_keys=False)})
+                f = SettingsForm()
+                if set.json_string != "":
+                    f = SettingsForm.from_json(json.loads(set.json_string), skip_unknown_keys=True)
+
+                if f.setname.data=="" : f.setname.data="Default name"
+
+                settings.append({"id":set.id, "data":f})
+
         except RunSettings.DoesNotExist:
             print("RunSettings empty")
         return render_template("htmSettings.html", settings = settings)

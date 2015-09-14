@@ -1,9 +1,15 @@
-from gens.input_generators import TestSimpleSteps, ConstantActiveBit
+from gens.input_generators import *
 from settings import SpatialSettings, TemporalSettings, InputSettings
 
 __author__ = 'AVPetrov'
 
 from wtforms import Form, BooleanField, StringField, PasswordField, validators, IntegerField, FloatField, SelectField
+
+gens = {
+        "TestSimpleSteps" : TestSimpleSteps , "ConstantActiveBit" : ConstantActiveBit,
+        "TooTestSimpleSteps" : TooTestSimpleSteps, "Too2TestSimpleSteps" : Too2TestSimpleSteps,
+        "HardSteps" : HardSteps, "HardStepsLen2" : HardStepsLen2, "Cross" : Cross
+       }
 
 
 class SettingsForm(Form):
@@ -42,7 +48,7 @@ class SettingsForm(Form):
     # generator = HardSteps
     # generator = ConstantActiveBit
     # generator = TestSimpleSteps
-    generator = SelectField('generator', choices = [(TestSimpleSteps, "TestSimpleSteps"), (ConstantActiveBit, "ConstantActiveBit")], default=1, validators = [validators.DataRequired()])
+    generator = SelectField('generator', choices = [(list(gens.keys())[i],list(gens.keys())[i]) for i in range(len(gens.keys()))], default=1, validators = [validators.DataRequired()])
 
     def getSpatialSettings(self):
         spset = SpatialSettings()
@@ -80,7 +86,7 @@ class SettingsForm(Form):
         inset = InputSettings()
         inset.SCALE = self.scale.data
         inset.STEPS_NUMBER = self.steps_number.data
-        inset.GENERATOR = self.generator.data
+        inset.GENERATOR = gens[self.generator.data]
         return inset
 
 

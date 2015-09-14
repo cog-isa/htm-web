@@ -40,6 +40,7 @@ class HTMCore:
 
     def move(self):
         # Spatial Pooler step
+        self.input=self.generator.get_data()
         inp = to_vector(self.generator.get_data())
         ov = self.spatial_pooler.update_overlaps(self.spatial_region.get_columns(), inp)
         self.spatial_pooler.inhibition_phase(self.spatial_region.get_columns(), ov)

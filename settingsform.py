@@ -60,7 +60,6 @@ class SettingsForm(Form):
         spset.initial_inhibition_radius = self.initial_inhibition_radius.data
         spset.permanence_inc = self.permanence_inc.data
         spset.permanence_dec = self.permanence_dec.data
-        spset.cells_per_column = self.cells_per_column.data
         spset.max_boost = self.max_boost.data
         spset.min_duty_cycle_fraction = self.min_duty_cycle_fraction.data
         return spset
@@ -73,7 +72,7 @@ class SettingsForm(Form):
         tpset.synapse_threshold = self.synapse_threshold.data
         tpset.dendrite_permanence_inc_delta = self.dendrite_permanence_inc_delta.data
         tpset.dendrite_permanence_dec_delta = self.dendrite_permanence_dec_delta.data
-        tpset.dendrite_activate_threshold = self.debug.dendrite_activate_threshold
+        tpset.dendrite_activate_threshold = self.dendrite_activate_threshold.data
         tpset.passive_time_to_active_threshold = self.passive_time_to_active_threshold.data
         return tpset
 

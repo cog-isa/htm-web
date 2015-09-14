@@ -24,10 +24,8 @@ function removeConf(id)
 
 }
 
-// Запускаем выбранную конфигурацию на исполнение
-function runConf(id)
-{
-}
+
+
 /*
 $( document ).ready(function() {
     $('.panel-collapse').collapse("hide");

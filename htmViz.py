@@ -79,8 +79,9 @@ def turn_on_java_server():
     if 'user_mail' in session:
         user = User.get(User.mail == session['user_mail'])
         port = user.port
+        settings_id = int(request.form['settings_id'])
         client = SocketClient(10100)
-        client.request(port)
+        client.request((port, settings_id))
         client.close()
         client = SocketClient(port)
         res = client.request("")

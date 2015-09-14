@@ -84,9 +84,10 @@ function draw_temporal_pool() {
     }
 }
 
-function do_go() {
+// Запускаем выбранную конфигурацию на исполнение
+function do_go(settings_id) {
     $.post('/turn_on_java_server/', {
-        text: "hello"
+        settings_id: settings_id
     }).done(function (json) {
             json_store = json;
             draw_input_data();

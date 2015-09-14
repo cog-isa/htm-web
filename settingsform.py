@@ -66,21 +66,21 @@ class SettingsForm(Form):
 
     def getTemporalSettings(self):
         tpset = TemporalSettings()
-        tpset.region_size_n = self.region_size_n.data
-        tpset.column_size = self.column_size.data
-        tpset.initial_permanence = self.initial_permanence.data
-        tpset.synapse_threshold = self.synapse_threshold.data
-        tpset.dendrite_permanence_inc_delta = self.dendrite_permanence_inc_delta.data
-        tpset.dendrite_permanence_dec_delta = self.dendrite_permanence_dec_delta.data
-        tpset.dendrite_activate_threshold = self.dendrite_activate_threshold.data
-        tpset.passive_time_to_active_threshold = self.passive_time_to_active_threshold.data
+        tpset.REGION_SIZE_N = self.region_size_n.data
+        tpset.COLUMN_SIZE = self.column_size.data
+        tpset.INITIAL_PERMANENCE = self.initial_permanence.data
+        tpset.SYNAPSE_THRESHOLD = self.synapse_threshold.data
+        tpset.DENDRITE_PERMANENCE_INC_DELTA = self.dendrite_permanence_inc_delta.data
+        tpset.DENDRITE_PERMANENCE_DEC_DELTA = self.dendrite_permanence_dec_delta.data
+        tpset.DENDRITE_ACTIVATE_THRESHOLD = self.dendrite_activate_threshold.data
+        tpset.PASSIVE_TIME_TO_ACTIVE_THRESHOLD = self.passive_time_to_active_threshold.data
         return tpset
 
     def getInputSettings(self):
         inset = InputSettings()
-        inset.scale = self.scale.data
-        inset.steps_number = self.steps_number.data
-        inset.generator = self.generator.data
+        inset.SCALE = self.scale.data
+        inset.STEPS_NUMBER = self.steps_number.data
+        inset.GENERATOR = self.generator.data
         return inset
 
 

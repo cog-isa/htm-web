@@ -1,4 +1,5 @@
 import socket as _socket
+import types
 
 
 class SystemMessages:
@@ -7,18 +8,21 @@ class SystemMessages:
     их поиск в тексте и удаление их из текста
     """
     # ключ для включения htm с настройками
-    TURN_ON_HTM_WITH_SETTINGS = "[TURN_ON_HTM_WITH_SETTINGS]"
+    TURN_ON_HTM_WITH_SETTINGS = "[SYSTEM_MESSAGE_TURN_ON_HTM_WITH_SETTINGS]"
     # ключ для включения без настроек
-    TURN_ON_HTM_WITHOUT_SETTINGS = "[TURN_ON_HTM_WITHOUT_SETTINGS]"
+    TURN_ON_HTM_WITHOUT_SETTINGS = "[SYSTEM_MESSAGE_TURN_ON_HTM_WITHOUT_SETTINGS]"
     # ключ для расчета следующего шага
-    MOVE = "[MOVE_MOVE_MOVE]"
+    MOVE = "[SYSTEM_MESSAGE_MOVE_MOVE_MOVE]"
 
     @staticmethod
     def get_keys_in_text(text):
         res = []
-        for key in SystemMessages.__dict__:
-            if text.find(key) != -1:
-                res.append(key)
+        for i in SystemMessages.__dict__:
+            key = SystemMessages.__dict__[i]
+            key = str(key)
+            if key.find("SYSTEM_MESSAGE_") != -1:
+                if text.find(key) != -1:
+                    res.append(key)
         return res
 
     @staticmethod
@@ -30,8 +34,11 @@ class SystemMessages:
         :param text: входной текста
         :return: текст без ключей
         """
-        for key in SystemMessages.__dict__:
-            text.replace(key, "")
+        for i in SystemMessages.__dict__:
+            key = SystemMessages.__dict__[i]
+            key = str(key)
+            if key.find("SYSTEM_MESSAGE_") != -1:
+                text = text.replace(key, "")
         return text
 
 
@@ -89,3 +96,10 @@ class SocketClient:
 
     def close(self):
         self.socket.close()
+
+
+if __name__ == "__main__":
+    # тест механизма SystemMessages
+    s = "12312" + SystemMessages.TURN_ON_HTM_WITH_SETTINGS + SystemMessages.MOVE
+    print(SystemMessages.get_keys_in_text(s))
+    print(SystemMessages.clear_keys_in_text(s))

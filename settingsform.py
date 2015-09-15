@@ -1,5 +1,14 @@
-from gens.input_generators import *
+import sys
+
+sys.path.insert(0, "htm-web/")
+sys.path.insert(0, "htm-core/")
+sys.path.insert(0, "htm-core/spatialPooler")
+sys.path.insert(0, "htm-core/temporalPooler")
+sys.path.insert(0, "htm-core/gens")
+sys.path.insert(0, "htm-core/apps")
+
 from settings import SpatialSettings, TemporalSettings, InputSettings
+from gens.input_generators import *
 
 __author__ = 'AVPetrov'
 

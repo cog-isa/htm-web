@@ -85,10 +85,8 @@ function draw_temporal_pool() {
 }
 
 // Запускаем выбранную конфигурацию на исполнение
-function do_go(settings_id) {
-    $.post('/turn_on_java_server/', {
-        settings_id: settings_id
-    }).done(function (json) {
+function do_go() {
+    $.post('/turn_on_java_server/', {}).done(function (json) {
             json_store = json;
             draw_input_data();
             draw_compress_data();
@@ -97,8 +95,18 @@ function do_go(settings_id) {
             correctness_data.push([correctness_data.length + 1, 100 * json_store["temporal_pooler"]["correctness"]]);
             draw_temporal_error_chart();
         }
-    )
-    ;
+    );
+}
+
+function turn_on_htm_server(settings_id) {
+    $.post('/turn_on_htm_server/', {
+        settings_id: settings_id
+    }).done(function (json) {
+            console.log("its ok");
+            window.location.replace("/htmRun/");
+
+        }
+    );
 }
 
 function draw_temporal_error_chart() {
@@ -119,12 +127,11 @@ function draw_temporal_error_chart() {
         width: 400,
         height: 300,
         axes: {
-          x: {
-            0: {side: 'top'}
-          }
+            x: {
+                0: {side: 'top'}
+            }
         }
     };
-
 
 
     temporal_error_chart.draw(data, options);

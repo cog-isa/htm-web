@@ -1,6 +1,6 @@
 import sys
-from settingsform import SettingsForm
 from utils import get_hash
+from settingsform import SettingsForm
 sys.path.insert(0, "htm-web/")
 sys.path.insert(0, "htm-core/")
 sys.path.insert(0, "htm-core/spatialPooler")

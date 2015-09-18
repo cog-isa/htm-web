@@ -84,9 +84,67 @@ function draw_temporal_pool() {
     }
 }
 
+// получаем текущие данные с сервера
+function get_htm_data() {
+    $.post('/get_htm_data/', {}).done(function (json) {
+            json_store = json;
+            console.log(json);
+            draw_input_data();
+            draw_compress_data();
+            draw_temporal_pool();
+
+            correctness_data.push([correctness_data.length + 1, 100 * json_store["temporal_pooler"]["correctness"]]);
+            draw_temporal_error_chart();
+        }
+    );
+}
+
+// останавливаем htm сервер,но ненадо пользоваться этой штукой, сокет лучше вообще не выключать, если он был запущен...
+function stop_htm_server() {
+    $.post('/stop_htm_server/', {}).done(function (json) {
+            json_store = json;
+            draw_input_data();
+            draw_compress_data();
+            draw_temporal_pool();
+
+            correctness_data.push([correctness_data.length + 1, 100 * json_store["temporal_pooler"]["correctness"]]);
+            draw_temporal_error_chart();
+        }
+    );
+}
+
 // Запускаем выбранную конфигурацию на исполнение
-function do_go() {
-    $.post('/turn_on_java_server/', {}).done(function (json) {
+function move_and_get_htm_data() {
+    $.post('/move_and_get_htm_data/', {}).done(function (json) {
+            json_store = json;
+            draw_input_data();
+            draw_compress_data();
+            draw_temporal_pool();
+
+            correctness_data.push([correctness_data.length + 1, 100 * json_store["temporal_pooler"]["correctness"]]);
+            draw_temporal_error_chart();
+        }
+    );
+}
+
+
+// Делаем 10 шагов
+function move10_and_get_htm_data() {
+    $.post('/move10_and_get_htm_data/', {}).done(function (json) {
+            json_store = json;
+            draw_input_data();
+            draw_compress_data();
+            draw_temporal_pool();
+
+            correctness_data.push([correctness_data.length + 1, 100 * json_store["temporal_pooler"]["correctness"]]);
+            draw_temporal_error_chart();
+        }
+    );
+}
+
+// Делаем 100 шагов
+function move100_and_get_htm_data() {
+    $.post('/move10_and_get_htm_data/', {}).done(function (json) {
             json_store = json;
             draw_input_data();
             draw_compress_data();

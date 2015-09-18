@@ -13,6 +13,16 @@ class SystemMessages:
     TURN_ON_HTM_WITHOUT_SETTINGS = "[SYSTEM_MESSAGE_TURN_ON_HTM_WITHOUT_SETTINGS]"
     # ключ для расчета следующего шага
     MOVE = "[SYSTEM_MESSAGE_MOVE_MOVE_MOVE]"
+    # ключ для расчета следующих 10 шагов
+    MOVE10 = "[SYSTEM_MESSAGE_MOVE10]"
+    # ключ для получения текущей информации
+    MOVE100 = "[SYSTEM_MESSAGE_MOVE100]"
+    # ключ для получения текущей информации
+    GET_DATA = "[SYSTEM_MESSAGE_GET_DATA]"
+    # остановить htm сервер
+    STOP = "[SYSTEM_MESSAGE_STOP_STOP_STOP]"
+    # перезапустить с новыми настройками
+    RESTART_WITH_SETTINGS = "[SYSTEM_MESSAGE_RESTART_WITH_SETTINGS]"
 
     @staticmethod
     def get_keys_in_text(text):

@@ -93,9 +93,40 @@ def turn_on_htm_server():
     return Response(response=res, status=200, mimetype="application/json")
 
 
-# TODO изменить название на move, убрать лишний код
-@app.route('/turn_on_java_server/', methods=['POST'])
-def turn_on_java_server():
+@app.route('/stop_htm_server/', methods=['POST'])
+def stop_htm_server():
+    print("stop_htm_server")
+    res = '{"test": "test"}'
+    if 'user_mail' in session:
+        user = User.get(User.mail == session['user_mail'])
+        port = user.port
+        client = SocketClient(port)
+        res = client.request(data="", message=SystemMessages.STOP)
+        client.close()
+        print(res)
+
+    return Response(response=res, status=200, mimetype="application/json")
+
+
+@app.route('/get_htm_data/', methods=['POST'])
+def get_htm_data():
+    print("get_htm_data")
+    res = '{"test": "test"}'
+    if 'user_mail' in session:
+        user = User.get(User.mail == session['user_mail'])
+        port = user.port
+
+        client = SocketClient(port)
+        res = client.request(data="", message=SystemMessages.GET_DATA)
+        client.close()
+
+        print(res)
+
+    return Response(response=res, status=200, mimetype="application/json")
+
+
+@app.route('/move_and_get_htm_data/', methods=['POST'])
+def move_and_get_htm_data():
     print("go")
     res = '{"test": "test"}'
     if 'user_mail' in session:
@@ -103,6 +134,34 @@ def turn_on_java_server():
         port = user.port
         client = SocketClient(port)
         res = client.request(data="", message=SystemMessages.MOVE)
+        client.close()
+
+    return Response(response=res, status=200, mimetype="application/json")
+
+
+@app.route('/move10_and_get_htm_data/', methods=['POST'])
+def move10_and_get_htm_data():
+    print("go")
+    res = '{"test": "test"}'
+    if 'user_mail' in session:
+        user = User.get(User.mail == session['user_mail'])
+        port = user.port
+        client = SocketClient(port)
+        res = client.request(data="", message=SystemMessages.MOVE10)
+        client.close()
+
+    return Response(response=res, status=200, mimetype="application/json")
+
+
+@app.route('/move100_and_get_htm_data/', methods=['POST'])
+def move100_and_get_htm_data():
+    print("go")
+    res = '{"test": "test"}'
+    if 'user_mail' in session:
+        user = User.get(User.mail == session['user_mail'])
+        port = user.port
+        client = SocketClient(port)
+        res = client.request(data="", message=SystemMessages.MOVE100)
         client.close()
 
     return Response(response=res, status=200, mimetype="application/json")
@@ -130,12 +189,6 @@ def login():
 def logout():
     session.clear()
     return redirect(url_for('htm_settings'))
-
-
-def turn_off_all_java_machines():
-    q = User.select()
-    for i in q:
-        connection.stop_htm_server(i.port)
 
 
 @app.route('/add_new_conf/', methods=['POST'])

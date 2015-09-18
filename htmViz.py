@@ -85,7 +85,7 @@ def turn_on_htm_server():
         user = User.get(User.mail == session['user_mail'])
         port = user.port
         settings_id = int(request.form['settings_id'])
-        client = SocketClient(10200)
+        client = SocketClient(10100)
         client.request((port, settings_id), SystemMessages.TURN_ON_HTM_WITH_SETTINGS)
         client.close()
         print("OUT_OK")

@@ -1,6 +1,7 @@
 import sys
 from utils import get_hash
 from settingsform import SettingsForm
+
 sys.path.insert(0, "htm-web/")
 sys.path.insert(0, "htm-core/")
 sys.path.insert(0, "htm-core/spatialPooler")
@@ -8,6 +9,7 @@ sys.path.insert(0, "htm-core/temporalPooler")
 sys.path.insert(0, "htm-core/gens")
 sys.path.insert(0, "htm-core/apps")
 
+from sockets import SystemMessages
 
 import json
 import utils
@@ -36,14 +38,14 @@ def htm_main():
     return render_template("basic.html")
 
 
-@app.route('/htmSettings/', methods=['GET','POST'])
+@app.route('/htmSettings/', methods=['GET', 'POST'])
 def htm_settings():
-    settings=[]
+    settings = []
 
     if 'user_mail' in session:
         user = User.get(User.mail == session['user_mail'])
 
-        if request.method == 'POST':# and form.validate():
+        if request.method == 'POST':  # and form.validate():
             form = SettingsForm(request.form)
             set = RunSettings.select().where(RunSettings.id == int(request.form['name'].split('form-')[1])).get()
             set.json_string = json.dumps(form.data)
@@ -51,27 +53,47 @@ def htm_settings():
             flash('Конфигурация сохранена')
 
         try:
-            res=RunSettings.select().where(RunSettings.user==user.get_id())
+            res = RunSettings.select().where(RunSettings.user == user.get_id())
             for set in res:
                 # print(json.loads(set.json_string))
                 f = SettingsForm()
                 if set.json_string != "":
                     f = SettingsForm.from_json(json.loads(set.json_string), skip_unknown_keys=True)
 
-                settings.append({"id":set.id, "data":f})
+                settings.append({"id": set.id, "data": f})
 
         except RunSettings.DoesNotExist:
             print("RunSettings empty")
-        return render_template("htmSettings.html", settings = settings)
+        return render_template("htmSettings.html", settings=settings)
 
     else:
         return render_template("401.html")
+
 
 @app.route('/htmRun/')
 def htm_run():
     return render_template("htmRun.html")
 
 
+######################################################################################################################
+@app.route('/turn_on_htm_server/', methods=['POST'])
+def turn_on_htm_server():
+    print("turn_on_htm_server")
+    res = '{"test": "test"}'
+    if 'user_mail' in session:
+        print("OKOKOK")
+        user = User.get(User.mail == session['user_mail'])
+        port = user.port
+        settings_id = int(request.form['settings_id'])
+        client = SocketClient(10200)
+        client.request((port, settings_id), SystemMessages.TURN_ON_HTM_WITH_SETTINGS)
+        client.close()
+        print("OUT_OK")
+
+    return Response(response=res, status=200, mimetype="application/json")
+
+
+# TODO изменить название на move, убрать лишний код
 @app.route('/turn_on_java_server/', methods=['POST'])
 def turn_on_java_server():
     print("go")
@@ -79,12 +101,8 @@ def turn_on_java_server():
     if 'user_mail' in session:
         user = User.get(User.mail == session['user_mail'])
         port = user.port
-        settings_id = int(request.form['settings_id'])
-        client = SocketClient(10100)
-        client.request((port, settings_id))
-        client.close()
         client = SocketClient(port)
-        res = client.request("")
+        res = client.request(data="", message=SystemMessages.MOVE)
         client.close()
 
     return Response(response=res, status=200, mimetype="application/json")
@@ -122,8 +140,9 @@ def turn_off_all_java_machines():
 
 @app.route('/add_new_conf/', methods=['POST'])
 def add_new_conf():
-    RunSettings.create( json_string = '',  name = 'Новая конфигурация', user = User.get(User.mail == session['user_mail']))
+    RunSettings.create(json_string='', name='Новая конфигурация', user=User.get(User.mail == session['user_mail']))
     return 'OK'
+
 
 @app.route('/remove_conf/', methods=['POST'])
 def remove_conf():

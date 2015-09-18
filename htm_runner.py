@@ -10,7 +10,7 @@ sys.path.insert(0, "htm-core/gens")
 sys.path.insert(0, "htm-core/apps")
 
 import threading
-from sockets import SocketServer
+from sockets import SocketServer, SystemMessages
 from htm_core_class import HTMCore
 import jsonpickle
 
@@ -56,13 +56,24 @@ def start_htm(server_port, settings_id):
 runner_server = SocketServer(10100)
 
 while True:
-    message = runner_server.receive_message()
-    (port,settings_id)=message.replace('(','',1).replace(')','',1).split(',')
-    (port,settings_id)=(int(port),int(settings_id))
-    if port not in active_ports:
-        print(port)
-        active_ports.add(port)
-        thread = threading.Thread(target=start_htm, args=(port, settings_id,))
-        thread.daemon = True
-        thread.start()
+    data = runner_server.receive_message()
+    message = SystemMessages.get_keys_in_text(data)
+    data = SystemMessages.clear_keys_in_text(data)
+
+    if SystemMessages.TURN_ON_HTM_WITH_SETTINGS in message:
+        (port,settings_id)=data.replace('(','',1).replace(')','',1).split(',')
+        (port,settings_id)=(int(port),int(settings_id))
+        if port not in active_ports:
+            print(port)
+            active_ports.add(port)
+            thread = threading.Thread(target=start_htm, args=(port, settings_id,))
+            thread.daemon = True
+            thread.start()
+
+    if SystemMessages.MOVE in message:
+        pass
+
     runner_server.send_message("")
+
+
+

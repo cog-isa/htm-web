@@ -39,12 +39,10 @@ def start_htm(server_port, settings_id):
         data = server.receive_message()
         message = SystemMessages.get_keys_in_text(data)
         data = SystemMessages.clear_keys_in_text(data)
-        print(message)
         if SystemMessages.GET_DATA in message:
             # сериализуем нужные нам части в объекте HTMSerialization
             htm_serialization = HTMSerialization(htm)
 
-            print(jsonpickle.encode(htm_serialization))
             server.send_message(jsonpickle.encode(htm_serialization))
             continue
 
@@ -86,13 +84,11 @@ def start_htm(server_port, settings_id):
             htm = HTMCore(inset, spset, tpset)
             htm.move()
             server.send_message("ok")
-            print("restart_ok")
             continue
 
         if SystemMessages.STOP in message:
             server.send_message("ok")
             server.close()
-            print("close")
             break
 
         print("Сообщение не обработано, нет ключей или .п.")
@@ -121,7 +117,6 @@ if __name__ == "__main__":
                 client = SocketClient(port)
                 client.request((port, settings_id), SystemMessages.RESTART_WITH_SETTINGS)
                 client.close()
-                print("olololo")
             else:
                 active_ports.add(port)
                 thread = threading.Thread(target=start_htm, args=(port, settings_id,))

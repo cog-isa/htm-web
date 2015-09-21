@@ -139,7 +139,7 @@ function move10_and_get_htm_data() {
 
 // Делаем 100 шагов
 function move100_and_get_htm_data() {
-    $.post('/move10_and_get_htm_data/', {}).done(function (json) {
+    $.post('/move100_and_get_htm_data/', {}).done(function (json) {
             json_store = json;
             draw_input_data();
             draw_compress_data();
@@ -170,8 +170,13 @@ function draw_temporal_error_chart() {
     data.addColumn('number', 'Корректность предсказания');
     var correctness_data = [];
     var sum = 0;
+    var av_cor_size = json_store["temporal_pooler"]["average_correctness_max_size"];
+    var current_step = json_store["temporal_pooler"]["correctness_steps"];
+    var start = Math.max(0, current_step - av_cor_size);
+    debug_add_line(current_step);
+    debug_add_line(av_cor_size);
     for (var i in json_store["temporal_pooler"]["average_correctness"]) {
-        correctness_data.push([parseInt(i), 100 * json_store["temporal_pooler"]["average_correctness"][i]]);
+        correctness_data.push([start + parseInt(i), 100 * json_store["temporal_pooler"]["average_correctness"][i]]);
     }
     data.addRows(correctness_data);
 

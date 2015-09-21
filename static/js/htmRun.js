@@ -11,7 +11,6 @@ function clear_element(element_id) {
 
 // хранит полученный json
 var json_store;
-var correctness_data = [[0, 0]];
 var temporal_error_chart = null;
 
 function draw_input_data() {
@@ -93,7 +92,6 @@ function get_htm_data() {
             draw_compress_data();
             draw_temporal_pool();
 
-            correctness_data.push([correctness_data.length + 1, 100 * json_store["temporal_pooler"]["correctness"]]);
             draw_temporal_error_chart();
         }
     );
@@ -107,7 +105,6 @@ function stop_htm_server() {
             draw_compress_data();
             draw_temporal_pool();
 
-            correctness_data.push([correctness_data.length + 1, 100 * json_store["temporal_pooler"]["correctness"]]);
             draw_temporal_error_chart();
         }
     );
@@ -121,7 +118,6 @@ function move_and_get_htm_data() {
             draw_compress_data();
             draw_temporal_pool();
 
-            correctness_data.push([correctness_data.length + 1, 100 * json_store["temporal_pooler"]["correctness"]]);
             draw_temporal_error_chart();
         }
     );
@@ -136,7 +132,6 @@ function move10_and_get_htm_data() {
             draw_compress_data();
             draw_temporal_pool();
 
-            correctness_data.push([correctness_data.length + 1, 100 * json_store["temporal_pooler"]["correctness"]]);
             draw_temporal_error_chart();
         }
     );
@@ -150,7 +145,6 @@ function move100_and_get_htm_data() {
             draw_compress_data();
             draw_temporal_pool();
 
-            correctness_data.push([correctness_data.length + 1, 100 * json_store["temporal_pooler"]["correctness"]]);
             draw_temporal_error_chart();
         }
     );
@@ -174,7 +168,11 @@ function draw_temporal_error_chart() {
     var data = new google.visualization.DataTable();
     data.addColumn('number', 'Шаг алгоритма');
     data.addColumn('number', 'Корректность предсказания');
-
+    var correctness_data = [];
+    var sum = 0;
+    for (var i in json_store["temporal_pooler"]["average_correctness"]) {
+        correctness_data.push([parseInt(i), 100 * json_store["temporal_pooler"]["average_correctness"][i]]);
+    }
     data.addRows(correctness_data);
 
     var options = {

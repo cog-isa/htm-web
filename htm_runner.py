@@ -15,13 +15,11 @@ from htm_core_class import HTMCore
 import jsonpickle
 
 
-#  In order to start using WTForms-JSON, you need to first initialize the extension.
-#  This monkey patches some classes and methods within WTForms and adds JSON handling support
-
-
-
 class HTMSerialization:
-    pass
+    def __init__(self, htm):
+        self.input = htm.input
+        self.compress_input = htm.compress_input
+        self.temporal_pooler = htm.temporal_pooler
 
 
 def start_htm(server_port, settings_id):
@@ -44,45 +42,35 @@ def start_htm(server_port, settings_id):
         print(message)
         if SystemMessages.GET_DATA in message:
             # сериализуем нужные нам части в объекте HTMSerialization
-            htm_serialization = HTMSerialization()
-            htm_serialization.input = htm.input
-            htm_serialization.compress_input = htm.compress_input
-            htm_serialization.temporal_pooler = htm.temporal_pooler
+            htm_serialization = HTMSerialization(htm)
 
+            print(jsonpickle.encode(htm_serialization))
             server.send_message(jsonpickle.encode(htm_serialization))
             continue
 
         if SystemMessages.MOVE in message:
             # сериализуем нужные нам части в объекте HTMSerialization
-            htm_serialization = HTMSerialization()
-            htm.move()
-            htm_serialization.input = htm.input
-            htm_serialization.compress_input = htm.compress_input
-            htm_serialization.temporal_pooler = htm.temporal_pooler
 
+            htm.move()
+            htm_serialization = HTMSerialization(htm)
             server.send_message(jsonpickle.encode(htm_serialization))
             continue
 
         if SystemMessages.MOVE10 in message:
             # сериализуем нужные нам части в объекте HTMSerialization
-            htm_serialization = HTMSerialization()
+
             for i in range(10):
                 htm.move()
-            htm_serialization.input = htm.input
-            htm_serialization.compress_input = htm.compress_input
-            htm_serialization.temporal_pooler = htm.temporal_pooler
+            htm_serialization = HTMSerialization(htm)
 
             server.send_message(jsonpickle.encode(htm_serialization))
             continue
 
         if SystemMessages.MOVE100 in message:
             # сериализуем нужные нам части в объекте HTMSerialization
-            htm_serialization = HTMSerialization()
             for i in range(100):
                 htm.move()
-            htm_serialization.input = htm.input
-            htm_serialization.compress_input = htm.compress_input
-            htm_serialization.temporal_pooler = htm.temporal_pooler
+            htm_serialization = HTMSerialization(htm)
 
             server.send_message(jsonpickle.encode(htm_serialization))
             continue
@@ -111,11 +99,16 @@ def start_htm(server_port, settings_id):
 
 
 if __name__ == "__main__":
-    active_ports = set()
+    #  In order to start using WTForms-JSON, you need to first initialize the extension.
+    #  This monkey patches some classes and methods within WTForms and adds JSON handling support
+    #  wtf ????
     wtforms_json.init()
 
-    runner_server = SocketServer(10100)
+    active_ports = set()
 
+    running_port = 10100
+    runner_server = SocketServer(running_port)
+    print(" * Running on port %d (Press CTRL+C to quit)" % running_port)
     while True:
         data = runner_server.receive_message()
         message = SystemMessages.get_keys_in_text(data)

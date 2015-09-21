@@ -17,7 +17,7 @@ class HTMCore:
         # может быть проблема в синхронизации htm-core
         spset.potential_radius = 1
         self.spatial_pooler = sp.Region(spset, SquareMapper)
-        self.temporal_pooler = tp.Region(spset.xdimension, temporal_settings.COLUMN_SIZE)
+        self.temporal_pooler = tp.Region(spset.xdimension, tpset.COLUMN_SIZE)
         # не стоит это сереализовывать
         self.input = None
         self.compress_input = None

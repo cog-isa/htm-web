@@ -185,8 +185,8 @@ function draw_temporal_error_chart() {
             //title: '',
             //subtitle: ''
         },
-        width: 400,
-        height: 300,
+        width: 700,
+        height: 450,
         axes: {
             x: {
                 0: {side: 'top'}

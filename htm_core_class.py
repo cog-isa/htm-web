@@ -8,14 +8,11 @@ class HTMCore:
         self.generator = MakeBubble(inset.GENERATOR, tpset.REGION_SIZE_N,
                                     inset.SCALE)
 
-        spset.xinput = tpset.REGION_SIZE_N * inset.SCALE
-        spset.yinput = tpset.REGION_SIZE_N * inset.SCALE
+        # spset.xinput = tpset.REGION_SIZE_N * inset.SCALE
+        # spset.yinput = tpset.REGION_SIZE_N * inset.SCALE
         # spset.xdimension = tpset.REGION_SIZE_N
         # spset.ydimension = tpset.REGION_SIZE_N
-
-        # TODO все-таки нужно найти где этот радиус задается в настройках и как передается...
-        # может быть проблема в синхронизации htm-core
-        spset.potential_radius = 1
+        # spset.potential_radius = 1
         self.spatial_pooler = sp.Region(spset, SquareMapper)
         self.temporal_pooler = tp.Region(spset.xdimension, tpset.COLUMN_SIZE)
         # не стоит это сереализовывать

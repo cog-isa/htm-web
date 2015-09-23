@@ -67,7 +67,7 @@ class SettingsForm(Form):
         spset.desired_local_activity = self.desired_local_activity.data
         spset.connected_pct = self.connected_pct.data
         spset.connected_perm = self.connected_perm.data
-        spset.xinput = self.xinput
+        spset.xinput = self.xinput.data
         spset.yinput = self.yinput.data
         spset.potential_radius = self.potential_radius.data
         spset.xdimension = self.xdimension.data

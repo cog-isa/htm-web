@@ -39,7 +39,7 @@ class SettingsForm(Form):
     permanence_inc = FloatField('permanence_inc', [validators.DataRequired()], default=0.1)
     permanence_dec = FloatField('permanence_dec', [validators.DataRequired()], default=0.1)
     max_boost = IntegerField('max_boost', [validators.DataRequired()], default=1)
-    min_duty_cycle_fraction = IntegerField('min_duty_cycle_fraction', [validators.DataRequired()], default=2)
+    min_duty_cycle_fraction = FloatField('min_duty_cycle_fraction', [validators.DataRequired()], default=0.2)
 
     # TemporalPooler Settings
     region_size_n = IntegerField('region_size_n', [validators.DataRequired()], default=3)

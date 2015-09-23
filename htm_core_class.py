@@ -10,8 +10,8 @@ class HTMCore:
 
         spset.xinput = tpset.REGION_SIZE_N * inset.SCALE
         spset.yinput = tpset.REGION_SIZE_N * inset.SCALE
-        spset.xdimension = tpset.REGION_SIZE_N
-        spset.ydimension = tpset.REGION_SIZE_N
+        # spset.xdimension = tpset.REGION_SIZE_N
+        # spset.ydimension = tpset.REGION_SIZE_N
 
         # TODO все-таки нужно найти где этот радиус задается в настройках и как передается...
         # может быть проблема в синхронизации htm-core

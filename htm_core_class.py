@@ -1,19 +1,13 @@
 import sp_region as sp
 import htm__region as tp
 from settings import *
-from spatialPooler.mappers.sp_square_mapper import SquareMapper
 
 class HTMCore:
     def __init__(self, inset, spset, tpset):
-        self.generator = MakeBubble(inset.GENERATOR, tpset.REGION_SIZE_N,
+        self.generator = MakeBubble(inset.GENERATOR, spset.xinput,
                                     inset.SCALE)
 
-        # spset.xinput = tpset.REGION_SIZE_N * inset.SCALE
-        # spset.yinput = tpset.REGION_SIZE_N * inset.SCALE
-        # spset.xdimension = tpset.REGION_SIZE_N
-        # spset.ydimension = tpset.REGION_SIZE_N
-        # spset.potential_radius = 1
-        self.spatial_pooler = sp.Region(spset, SquareMapper)
+        self.spatial_pooler = sp.Region(spset, inset.MAPPER)
         self.temporal_pooler = tp.Region(spset.xdimension, tpset.COLUMN_SIZE)
         # не стоит это сереализовывать
         self.input = None

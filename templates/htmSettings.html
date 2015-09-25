@@ -41,39 +41,63 @@
           <div class="panel-body">
              <form action="/htmSettings/" method="post" name="htmSettings">
                <input type="hidden" name="name" value="form-{{form['id']}}">
-                 {# SpatialPooler Settings #}
-                 {{ render_field(form['data'].setname) }}
-                 {{ render_field(form['data'].debug) }}
-                 {{ render_field(form['data'].activation_threshold) }}
-                 {{ render_field(form['data'].min_overlap) }}
-                 {{ render_field(form['data'].desired_local_activity) }}
-                 {{ render_field(form['data'].connected_pct) }}
-                 {{ render_field(form['data'].connected_perm) }}
-                 {{ render_field(form['data'].xinput) }}
-                 {{ render_field(form['data'].yinput) }}
-                 {{ render_field(form['data'].potential_radius) }}
-                 {{ render_field(form['data'].xdimension) }}
-                 {{ render_field(form['data'].ydimension) }}
-                 {{ render_field(form['data'].initial_inhibition_radius) }}
-                 {{ render_field(form['data'].permanence_inc) }}
-                 {{ render_field(form['data'].permanence_dec) }}
-                 {{ render_field(form['data'].max_boost) }}
-                 {{ render_field(form['data'].min_duty_cycle_fraction) }}
 
-                 {# TemporalPooler Settings #}
-                 {{ render_field(form['data'].region_size_n) }}
-                 {{ render_field(form['data'].column_size) }}
-                 {{ render_field(form['data'].initial_permanence) }}
-                 {{ render_field(form['data'].synapse_threshold) }}
-                 {{ render_field(form['data'].dendrite_permanence_inc_delta) }}
-                 {{ render_field(form['data'].dendrite_permanence_dec_delta) }}
-                 {{ render_field(form['data'].dendrite_activate_threshold) }}
-                 {{ render_field(form['data'].passive_time_to_active_threshold) }}
+                 <br>
+                 <h4> Input \ Generator Settings</h4>
+                 <div class="row">
+                  <div class="col-sm-4">
+                      {{ render_field(form['data'].setname) }}
+                      {{ render_field(form['data'].xinput) }}
+                      {{ render_field(form['data'].yinput) }}
+                      {{ render_field(form['data'].mapper) }}
+                  </div>
+                  <div class="col-sm-4">
+                      {{ render_field(form['data'].generator) }}
+                      {{ render_field(form['data'].scale) }}
+                      {{ render_field(form['data'].steps_number) }}
 
-                 {# Input Settings #}
-                 {{ render_field(form['data'].scale) }}
-                 {{ render_field(form['data'].steps_number) }}
-                 {{ render_field(form['data'].generator) }}
+                  </div>
+                 </div>
+
+                 <br>
+                 <h4>SpatialPooler Settings</h4>
+                 <div class="row">
+                  <div class="col-sm-4">
+                     {{ render_field(form['data'].debug) }}
+                     {{ render_field(form['data'].xdimension) }}
+                     {{ render_field(form['data'].ydimension) }}
+                      {{ render_field(form['data'].potential_radius) }}
+                     {{ render_field(form['data'].activation_threshold) }}
+                     {{ render_field(form['data'].min_overlap) }}
+                     {{ render_field(form['data'].desired_local_activity) }}
+                  </div>
+                  <div class="col-sm-4">
+                     {{ render_field(form['data'].connected_pct) }}
+                     {{ render_field(form['data'].connected_perm) }}
+                     {{ render_field(form['data'].initial_inhibition_radius) }}
+                     {{ render_field(form['data'].permanence_inc) }}
+                     {{ render_field(form['data'].permanence_dec) }}
+                     {{ render_field(form['data'].max_boost) }}
+                     {{ render_field(form['data'].min_duty_cycle_fraction) }}</div>
+                </div>
+
+
+                 <br>
+                 <h4>TemporalPooler Settings</h4>
+                 <div class="row">
+                  <div class="col-sm-4">
+                    {{ render_field(form['data'].column_size) }}
+                    {{ render_field(form['data'].initial_permanence) }}
+                    {{ render_field(form['data'].synapse_threshold) }}
+                  </div>
+                  <div class="col-sm-4">
+                    {{ render_field(form['data'].dendrite_permanence_inc_delta) }}
+                    {{ render_field(form['data'].dendrite_permanence_dec_delta) }}
+                    {{ render_field(form['data'].dendrite_activate_threshold) }}
+                    {{ render_field(form['data'].passive_time_to_active_threshold) }}
+                  </div>
+                 </div>
+                 <br>
               <p><input type="submit" value="Сохранить"></p>
              </form>
 

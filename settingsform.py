@@ -1,4 +1,8 @@
 import sys
+from mappers.sp_simple_mapper import SimpleMapper
+from mappers.sp_square_mapper import SquareMapper
+from mappers.sp_square_mapper_auto_radius import SquareMapperAutoRadius
+from mappers.sp_very_simple_mapper import VerySimpleMapper
 
 sys.path.insert(0, "htm-web/")
 sys.path.insert(0, "htm-core/")
@@ -10,6 +14,7 @@ sys.path.insert(0, "htm-core/apps")
 from settings import SpatialSettings, TemporalSettings, InputSettings
 from gens.input_generators import *
 
+
 __author__ = 'AVPetrov'
 
 from wtforms import Form, BooleanField, StringField, PasswordField, validators, IntegerField, FloatField, SelectField
@@ -20,6 +25,10 @@ gens = {
         "HardSteps" : HardSteps, "HardStepsLen2" : HardStepsLen2, "Cross" : Cross
        }
 
+mappers = {
+        "SquareMapperAutoRadius" :  SquareMapperAutoRadius, "SquareMapper" : SquareMapper,
+        "SimpleMapper" : SimpleMapper, "VerySimpleMapper" : VerySimpleMapper
+       }
 
 class SettingsForm(Form):
     # SpatialPooler Settings
@@ -42,7 +51,6 @@ class SettingsForm(Form):
     min_duty_cycle_fraction = FloatField('min_duty_cycle_fraction', [validators.DataRequired()], default=0.2)
 
     # TemporalPooler Settings
-    region_size_n = IntegerField('region_size_n', [validators.DataRequired()], default=3)
     column_size = IntegerField('column_size', [validators.DataRequired()], default=3)
     initial_permanence =  FloatField('initial_permanence', [validators.DataRequired()], default=0.30)
     synapse_threshold =  FloatField('synapse_threshold', [validators.DataRequired()], default=0.25)
@@ -58,6 +66,7 @@ class SettingsForm(Form):
     # generator = ConstantActiveBit
     # generator = TestSimpleSteps
     generator = SelectField('generator', choices = [(list(gens.keys())[i],list(gens.keys())[i]) for i in range(len(gens.keys()))], default=1, validators = [validators.DataRequired()])
+    mapper = SelectField('mapper', choices = [(list(mappers.keys())[i],list(mappers.keys())[i]) for i in range(len(mappers.keys()))], default="SquareMapperAutoRadius", validators = [validators.DataRequired()])
 
     def getSpatialSettings(self):
         spset = SpatialSettings()
@@ -81,7 +90,6 @@ class SettingsForm(Form):
 
     def getTemporalSettings(self):
         tpset = TemporalSettings()
-        tpset.REGION_SIZE_N = self.region_size_n.data
         tpset.COLUMN_SIZE = self.column_size.data
         tpset.INITIAL_PERMANENCE = self.initial_permanence.data
         tpset.SYNAPSE_THRESHOLD = self.synapse_threshold.data
@@ -96,6 +104,7 @@ class SettingsForm(Form):
         inset.SCALE = self.scale.data
         inset.STEPS_NUMBER = self.steps_number.data
         inset.GENERATOR = gens[self.generator.data]
+        inset.MAPPER = mappers[self.mapper.data]
         return inset
 
 

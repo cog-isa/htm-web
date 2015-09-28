@@ -133,39 +133,19 @@ def move_and_get_htm_data():
         user = User.get(User.mail == session['user_mail'])
         port = user.port
         client = SocketClient(port)
-        res = client.request(data="", message=SystemMessages.MOVE)
+
+        mes=SystemMessages.MOVE
+        if request.form['cnt'] == '1':
+            mes=SystemMessages.MOVE
+        elif request.form['cnt'] == '100':
+            mes=SystemMessages.MOVE100
+        elif request.form['cnt'] == '1000':
+            mes=SystemMessages.MOVE1000
+
+        res = client.request(data="", message=mes)
         client.close()
 
     return Response(response=res, status=200, mimetype="application/json")
-
-
-@app.route('/move10_and_get_htm_data/', methods=['POST'])
-def move10_and_get_htm_data():
-    print("go")
-    res = '{"test": "test"}'
-    if 'user_mail' in session:
-        user = User.get(User.mail == session['user_mail'])
-        port = user.port
-        client = SocketClient(port)
-        res = client.request(data="", message=SystemMessages.MOVE10)
-        client.close()
-
-    return Response(response=res, status=200, mimetype="application/json")
-
-
-@app.route('/move100_and_get_htm_data/', methods=['POST'])
-def move100_and_get_htm_data():
-    print("go")
-    res = '{"test": "test"}'
-    if 'user_mail' in session:
-        user = User.get(User.mail == session['user_mail'])
-        port = user.port
-        client = SocketClient(port)
-        res = client.request(data="", message=SystemMessages.MOVE100)
-        client.close()
-
-    return Response(response=res, status=200, mimetype="application/json")
-
 
 @app.route('/login/', methods=['GET', 'POST'])
 def login():

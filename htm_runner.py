@@ -54,19 +54,18 @@ def start_htm(server_port, settings_id):
             server.send_message(jsonpickle.encode(htm_serialization))
             continue
 
-        if SystemMessages.MOVE10 in message:
+        if SystemMessages.MOVE100 in message:
             # сериализуем нужные нам части в объекте HTMSerialization
-
-            for i in range(10):
+            for i in range(100):
                 htm.move()
             htm_serialization = HTMSerialization(htm)
 
             server.send_message(jsonpickle.encode(htm_serialization))
             continue
 
-        if SystemMessages.MOVE100 in message:
+        if SystemMessages.MOVE1000 in message:
             # сериализуем нужные нам части в объекте HTMSerialization
-            for i in range(100):
+            for i in range(1000):
                 htm.move()
             htm_serialization = HTMSerialization(htm)
 

@@ -111,8 +111,8 @@ function stop_htm_server() {
 }
 
 // Запускаем выбранную конфигурацию на исполнение
-function move_and_get_htm_data() {
-    $.post('/move_and_get_htm_data/', {}).done(function (json) {
+function move_and_get_htm_data(cnt) {
+    $.post('/move_and_get_htm_data/', {cnt: cnt}).done(function (json) {
             json_store = json;
             draw_input_data();
             draw_compress_data();
@@ -123,32 +123,6 @@ function move_and_get_htm_data() {
     );
 }
 
-
-// Делаем 10 шагов
-function move10_and_get_htm_data() {
-    $.post('/move10_and_get_htm_data/', {}).done(function (json) {
-            json_store = json;
-            draw_input_data();
-            draw_compress_data();
-            draw_temporal_pool();
-
-            draw_temporal_error_chart();
-        }
-    );
-}
-
-// Делаем 100 шагов
-function move100_and_get_htm_data() {
-    $.post('/move100_and_get_htm_data/', {}).done(function (json) {
-            json_store = json;
-            draw_input_data();
-            draw_compress_data();
-            draw_temporal_pool();
-
-            draw_temporal_error_chart();
-        }
-    );
-}
 
 function turn_on_htm_server(settings_id) {
     $.post('/turn_on_htm_server/', {

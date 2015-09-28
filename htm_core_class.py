@@ -7,6 +7,9 @@ class HTMCore:
         self.generator = MakeBubble(inset.GENERATOR, spset.xinput,
                                     inset.SCALE)
 
+        spset.xinput=spset.xinput*inset.SCALE
+        spset.yinput=spset.yinput*inset.SCALE
+
         self.spatial_pooler = sp.Region(spset, inset.MAPPER)
         self.temporal_pooler = tp.Region(spset.xdimension, tpset.COLUMN_SIZE)
         # не стоит это сереализовывать

@@ -1,8 +1,4 @@
 import sys
-from mappers.sp_simple_mapper import SimpleMapper
-from mappers.sp_square_mapper import SquareMapper
-from mappers.sp_square_mapper_auto_radius import SquareMapperAutoRadius
-from mappers.sp_very_simple_mapper import VerySimpleMapper
 
 sys.path.insert(0, "htm-web/")
 sys.path.insert(0, "htm-core/")
@@ -13,6 +9,11 @@ sys.path.insert(0, "htm-core/apps")
 
 from settings import SpatialSettings, TemporalSettings, InputSettings
 from gens.input_generators import *
+
+from spatialPooler.mappers.sp_simple_mapper import SimpleMapper
+from spatialPooler.mappers.sp_square_mapper import SquareMapper
+from spatialPooler.mappers.sp_square_mapper_auto_radius import SquareMapperAutoRadius
+from spatialPooler.mappers.sp_very_simple_mapper import VerySimpleMapper
 
 
 __author__ = 'AVPetrov'

@@ -20,6 +20,7 @@ class HTMSerialization:
         self.input = htm.input
         self.compress_input = htm.compress_input
         self.temporal_pooler = htm.temporal_pooler
+        self.sp_prediction = htm.spatial_pooler.out_prediction(htm.temporal_pooler.out_binary_prediction())
 
 
 def start_htm(server_port, settings_id):
@@ -42,7 +43,6 @@ def start_htm(server_port, settings_id):
         if SystemMessages.GET_DATA in message:
             # сериализуем нужные нам части в объекте HTMSerialization
             htm_serialization = HTMSerialization(htm)
-
             server.send_message(jsonpickle.encode(htm_serialization))
             continue
 

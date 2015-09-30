@@ -32,6 +32,26 @@ function draw_input_data() {
     }
 }
 
+function draw_sp_prediction_data() {
+    clear_element("sp_prediction");
+
+    console.log(json_store["sp_prediction"]);
+    for (var i = 0; i < json_store["sp_prediction"].length; i++) {
+        for (var j = 0; j < json_store["sp_prediction"][i].length; j++) {
+
+            var cell_str11 = '<a class="thumbnail htm_ceil"></a>';
+            if (parseFloat(json_store["sp_prediction"][i][j]) > 0.5)
+                cell_str11 = '<a class="thumbnail btn-warning htm_ceil"></a>';
+            var cell_elem22 = create_element("cell_", cell_str11);
+
+            document.getElementById("sp_prediction").appendChild(cell_elem22);
+        }
+        var tr12 = '<br>';
+        var tr_element12 = create_element("column_", tr12);
+        document.getElementById("sp_prediction").appendChild(tr_element12);
+    }
+}
+
 function draw_compress_data() {
     clear_element("compress_input");
 
@@ -91,6 +111,7 @@ function get_htm_data() {
             draw_input_data();
             draw_compress_data();
             draw_temporal_pool();
+            draw_sp_prediction_data();
 
             draw_temporal_error_chart();
         }
@@ -117,6 +138,7 @@ function move_and_get_htm_data(cnt) {
             draw_input_data();
             draw_compress_data();
             draw_temporal_pool();
+            draw_sp_prediction_data();
 
             draw_temporal_error_chart();
         }

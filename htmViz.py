@@ -120,7 +120,13 @@ def get_htm_data():
         res = client.request(data="", message=SystemMessages.GET_DATA)
         client.close()
 
-        print(res)
+
+        """
+        вывод сериализованных данных в файл
+        f = open("out.txt", "w")
+        f.write(res)
+        f.close()
+        """
 
     return Response(response=res, status=200, mimetype="application/json")
 

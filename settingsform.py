@@ -23,7 +23,7 @@ from wtforms import Form, BooleanField, StringField, PasswordField, validators, 
 gens = {
         "TestSimpleSteps" : TestSimpleSteps , "ConstantActiveBit" : ConstantActiveBit,
         "TooTestSimpleSteps" : TooTestSimpleSteps, "Too2TestSimpleSteps" : Too2TestSimpleSteps,
-        "HardSteps" : HardSteps, "HardStepsLen2" : HardStepsLen2, "Cross" : Cross
+        "HardSteps" : HardSteps, "HardStepsLen2" : HardStepsLen2, "Cross" : Cross, "Snake":Snake
        }
 
 mappers = {
@@ -40,11 +40,11 @@ class SettingsForm(Form):
     desired_local_activity = IntegerField('DesiredLocalActivity', [validators.DataRequired()], default=3)
     connected_pct = IntegerField('ConnectedPercent', [validators.DataRequired()], default=1)
     connected_perm = FloatField('PermanenceThreshold', [validators.DataRequired()], default=0.01)
-    xinput = IntegerField('InputWidth', [validators.DataRequired()], default=1)
-    yinput = IntegerField('InputHeight', [validators.DataRequired()], default=1)
+    xinput = IntegerField('InputWidth', [validators.DataRequired()], default=3)
+    yinput = IntegerField('InputHeight', [validators.DataRequired()], default=3)
     potential_radius = IntegerField('PotentialRadius', [validators.DataRequired()], default=4)
-    xdimension = IntegerField('ColumnsWidth', [validators.DataRequired()], default=10)
-    ydimension = IntegerField('ColumnsHeight', [validators.DataRequired()], default=10)
+    xdimension = IntegerField('ColumnsWidth', [validators.DataRequired()], default=3)
+    ydimension = IntegerField('ColumnsHeight', [validators.DataRequired()], default=3)
     initial_inhibition_radius = IntegerField('InitialInhibitionRadius', [validators.DataRequired()], default=1)
     permanence_inc = FloatField('PermanenceInc', [validators.DataRequired()], default=0.1)
     permanence_dec = FloatField('PermanenceDec', [validators.DataRequired()], default=0.1)
@@ -61,7 +61,7 @@ class SettingsForm(Form):
     passive_time_to_active_threshold = IntegerField('PassiveTimeToActiveThreshold', [validators.DataRequired()], default=2000)
 
     # Input Settings
-    scale = IntegerField('InputScale', [validators.DataRequired()], default=3)
+    scale = IntegerField('InputScale', [validators.DataRequired()], default=2)
     steps_number = IntegerField('GeneratorStepsNumber', [validators.DataRequired()], default=100)
     # generator = HardSteps
     # generator = ConstantActiveBit

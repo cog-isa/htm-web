@@ -67,7 +67,7 @@ def htm_settings():
         return render_template("htmSettings.html", settings=settings)
 
     else:
-        return render_template("401.html")
+        return render_template("basic.html")
 
 
 @app.route('/htmRun/')

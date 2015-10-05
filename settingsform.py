@@ -60,7 +60,7 @@ class SettingsForm(Form):
     passive_time_to_active_threshold = IntegerField('PassiveTimeToActiveThreshold', [validators.DataRequired()], default=2000, description="Порог, определяющий активацию клетки, даже если она не была предсказана (долго простаивала)")
 
     # Input Settings
-    scale = IntegerField('InputScale', [validators.DataRequired()], default=2, description="Масштабный множитель входных данных ('раздутие')")
+    scale = IntegerField('InputScale', [validators.DataRequired()], default=2, description="Масштабный множитель входных данных (раздутие)")
     # steps_number = IntegerField('GeneratorStepsNumber', [validators.DataRequired()], default=100, description="asd")
     # generator = HardSteps
     # generator = ConstantActiveBit
@@ -76,10 +76,8 @@ class SettingsForm(Form):
         spset.connected_pct = self.connected_pct.data
         spset.connected_perm = self.connected_perm.data
         spset.xinput = self.xinput.data
-        spset.yinput = self.yinput.data
         spset.potential_radius = self.potential_radius.data
         spset.xdimension = self.xdimension.data
-        spset.ydimension = self.ydimension.data
         spset.initial_inhibition_radius = self.initial_inhibition_radius.data
         spset.permanence_inc = self.permanence_inc.data
         spset.permanence_dec = self.permanence_dec.data
@@ -101,7 +99,6 @@ class SettingsForm(Form):
     def getInputSettings(self):
         inset = InputSettings()
         inset.SCALE = self.scale.data
-        inset.STEPS_NUMBER = self.steps_number.data
         inset.GENERATOR = gens[self.generator.data]
         inset.MAPPER = mappers[self.mapper.data]
         return inset

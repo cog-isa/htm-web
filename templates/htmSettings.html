@@ -2,19 +2,22 @@
 {% extends "basic.html" %}
 
 {% block head_js %}
-    <script type="text/javascript" src="{{ url_for('static', filename='js/htmRun.js') }}"></script>
-    <script type="text/javascript" src="{{ url_for('static', filename='js/htmSettings.js') }}"></script>
+<script type="text/javascript" src="{{ url_for('static', filename='js/htmRun.js') }}"></script>
+<script type="text/javascript" src="{{ url_for('static', filename='js/htmSettings.js') }}"></script>
+
 {% endblock %}
 
 {% block body %}
 
-<div class="panel-group col-md-8 col-md-push-2 htm_viz_pick_settings panel-primary" id="accordion" role="tablist" aria-multiselectable="true">
+<div class="panel-group col-md-8 col-md-push-2 htm_viz_pick_settings panel-primary" id="accordion" role="tablist"
+     aria-multiselectable="true">
     <div class="panel-heading htm_viz_settings_panel_heading">
 
 
         <div class="btn-group pull-right">
-            <button type="button" id="addConfButton" onclick="addNewConf()" data-loading-text="Добавляем..." class="btn btn-primary" autocomplete="off">
-               Добавить конфигурацию
+            <button type="button" id="addConfButton" onclick="addNewConf()" data-loading-text="Добавляем..."
+                    class="btn btn-primary" autocomplete="off">
+                Добавить конфигурацию
             </button>
         </div>
         <h3 class="panel-title">Список доступных конфигураций </h3>
@@ -22,95 +25,95 @@
 
     {% set i=0 %}
     {% for form in settings %}
-        <div class="panel panel-default">
+    <div class="panel panel-default">
         <div class="panel-heading htm_viz_settings_panel_heading" role="tab" id="heading{{i}}">
-          <h4 class="panel-title">
-            <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapse{{i}}" aria-expanded="false" aria-controls="collapse{{i}}">
-              {{ form['data'].setname.data  }}
-            </a>
-            <button type="button" id="removeConfButton" onclick="removeConf({{form['id']}})" data-loading-text="Удаляем..." class="btn btn-primary pull-right" autocomplete="off">
-               Удалить
-            </button>
-            <button type="button" id="runConfButton" onclick="turn_on_htm_server({{form['id']}})" data-loading-text="Запускаем..." class="btn btn-primary pull-right" autocomplete="off">
-               Запуск
-            </button>
+            <h4 class="panel-title">
+                <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapse{{i}}"
+                   aria-expanded="false" aria-controls="collapse{{i}}">
+                    {{ form['data'].setname.data }}
+                </a>
+                <button type="button" id="removeConfButton" onclick="removeConf({{form['id']}})"
+                        data-loading-text="Удаляем..." class="btn btn-primary pull-right" autocomplete="off">
+                    Удалить
+                </button>
+                <button type="button" id="runConfButton" onclick="turn_on_htm_server({{form['id']}})"
+                        data-loading-text="Запускаем..." class="btn btn-primary pull-right" autocomplete="off">
+                    Запуск
+                </button>
 
-          </h4>
+            </h4>
         </div>
         <div id="collapse{{i}}" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading{{i}}">
-          <div class="panel-body">
-             <form action="/htmSettings/" method="post" name="htmSettings">
-               <input type="hidden" name="name" value="form-{{form['id']}}">
+            <div class="panel-body">
+                <form action="/htmSettings/" method="post" name="htmSettings">
+                    <input type="hidden" name="name" value="form-{{form['id']}}">
 
-                 <br>
-                 <h4> Input \ Generator Settings</h4>
-                 <div class="row">
-                  <div class="col-sm-4">
-                      {{ render_field(form['data'].setname) }}
-                      {{ render_field(form['data'].xinput) }}
-                      {{ render_field(form['data'].yinput) }}
-                      {{ render_field(form['data'].mapper) }}
-                  </div>
-                  <div class="col-sm-4">
-                      {{ render_field(form['data'].generator) }}
-                      {{ render_field(form['data'].scale) }}
-                      {{ render_field(form['data'].steps_number) }}
+                    <br>
+                    <h4> Input \ Generator Settings</h4>
 
-                  </div>
-                 </div>
+                    <div class="row">
+                        <div class="col-sm-4">
+                            {{ render_field(form['data'].setname, data_toggle='tooltip') }}
+                            {{ render_field(form['data'].xinput, data_toggle='tooltip') }}
+                            {{ render_field(form['data'].mapper, data_toggle='tooltip') }}
+                        </div>
+                        <div class="col-sm-4">
+                            {{ render_field(form['data'].generator) }}
+                            {{ render_field(form['data'].scale, data_toggle='tooltip') }}
+                        </div>
+                    </div>
 
-                 <br>
-                 <h4>SpatialPooler Settings</h4>
-                 <div class="row">
-                  <div class="col-sm-4">
-                     {{ render_field(form['data'].debug) }}
-                     {{ render_field(form['data'].xdimension) }}
-                     {{ render_field(form['data'].ydimension) }}
-                      {{ render_field(form['data'].potential_radius) }}
-                     {{ render_field(form['data'].activation_threshold) }}
-                     {{ render_field(form['data'].min_overlap) }}
-                     {{ render_field(form['data'].desired_local_activity) }}
-                  </div>
-                  <div class="col-sm-4">
-                     {{ render_field(form['data'].connected_pct) }}
-                     {{ render_field(form['data'].connected_perm) }}
-                     {{ render_field(form['data'].initial_inhibition_radius) }}
-                     {{ render_field(form['data'].permanence_inc) }}
-                     {{ render_field(form['data'].permanence_dec) }}
-                     {{ render_field(form['data'].max_boost) }}
-                     {{ render_field(form['data'].min_duty_cycle_fraction) }}</div>
-                </div>
+                    <br>
+                    <h4>SpatialPooler Settings</h4>
+
+                    <div class="row">
+                        <div class="col-sm-4">
+                            {{ render_field(form['data'].debug) }}
+                            {{ render_field(form['data'].xdimension, data_toggle='tooltip') }}
+                            {{ render_field(form['data'].potential_radius, data_toggle='tooltip') }}
+                            {{ render_field(form['data'].desired_local_activity, data_toggle='tooltip') }}
+                            {{ render_field(form['data'].connected_pct, data_toggle='tooltip') }}
+                            {{ render_field(form['data'].connected_perm, data_toggle='tooltip') }}
+                        </div>
+                        <div class="col-sm-4">
+                            {{ render_field(form['data'].initial_inhibition_radius, data_toggle='tooltip') }}
+                            {{ render_field(form['data'].permanence_inc, data_toggle='tooltip') }}
+                            {{ render_field(form['data'].permanence_dec, data_toggle='tooltip') }}
+                            {{ render_field(form['data'].max_boost, data_toggle='tooltip') }}
+                            {{ render_field(form['data'].min_duty_cycle_fraction, data_toggle='tooltip') }}
+                            {{ render_field(form['data'].min_overlap, data_toggle='tooltip') }}
+                        </div>
+                    </div>
 
 
-                 <br>
-                 <h4>TemporalPooler Settings</h4>
-                 <div class="row">
-                  <div class="col-sm-4">
-                    {{ render_field(form['data'].column_size) }}
-                    {{ render_field(form['data'].initial_permanence) }}
-                    {{ render_field(form['data'].synapse_threshold) }}
-                  </div>
-                  <div class="col-sm-4">
-                    {{ render_field(form['data'].dendrite_permanence_inc_delta) }}
-                    {{ render_field(form['data'].dendrite_permanence_dec_delta) }}
-                    {{ render_field(form['data'].dendrite_activate_threshold) }}
-                    {{ render_field(form['data'].passive_time_to_active_threshold) }}
-                  </div>
-                 </div>
-                 <br>
-              <p><input type="submit" value="Сохранить"></p>
-             </form>
+                    <br>
+                    <h4>TemporalPooler Settings</h4>
+
+                    <div class="row">
+                        <div class="col-sm-4">
+                            {{ render_field(form['data'].column_size, data_toggle='tooltip') }}
+                            {{ render_field(form['data'].initial_permanence, data_toggle='tooltip') }}
+                            {{ render_field(form['data'].synapse_threshold, data_toggle='tooltip') }}
+                        </div>
+                        <div class="col-sm-4">
+                            {{ render_field(form['data'].dendrite_permanence_inc_delta, data_toggle='tooltip') }}
+                            {{ render_field(form['data'].dendrite_permanence_dec_delta, data_toggle='tooltip') }}
+                            {{ render_field(form['data'].dendrite_activate_threshold, data_toggle='tooltip') }}
+                            {{ render_field(form['data'].passive_time_to_active_threshold, data_toggle='tooltip') }}
+                        </div>
+                    </div>
+                    <br>
+
+                    <p><input type="submit" value="Сохранить"></p>
+                </form>
 
 
-
-          </div>
+            </div>
         </div>
-        </div>
-        {% set i=i+1 %}
+    </div>
+    {% set i=i+1 %}
     {% endfor %}
 </div>
-
-
 
 
 {% endblock %}

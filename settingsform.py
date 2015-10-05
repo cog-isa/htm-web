@@ -33,36 +33,35 @@ mappers = {
 
 class SettingsForm(Form):
     # SpatialPooler Settings
-    setname = StringField('Settings name', [validators.Length(min=4, max=35)], default="Default name")
+    setname = StringField('Settings name', [validators.Length(min=4, max=35)], default="Default name", description="Имя конфигурации")
     debug = BooleanField('Debug', [validators.DataRequired()], default=True)
-    activation_threshold = IntegerField('ActivationThreshold', [validators.DataRequired()], default=1)
-    min_overlap = IntegerField('MinOverlap', [validators.DataRequired()], default=1)
-    desired_local_activity = IntegerField('DesiredLocalActivity', [validators.DataRequired()], default=3)
-    connected_pct = IntegerField('ConnectedPercent', [validators.DataRequired()], default=1)
-    connected_perm = FloatField('PermanenceThreshold', [validators.DataRequired()], default=0.01)
-    xinput = IntegerField('InputWidth', [validators.DataRequired()], default=3)
-    yinput = IntegerField('InputHeight', [validators.DataRequired()], default=3)
-    potential_radius = IntegerField('PotentialRadius', [validators.DataRequired()], default=4)
-    xdimension = IntegerField('ColumnsWidth', [validators.DataRequired()], default=3)
-    ydimension = IntegerField('ColumnsHeight', [validators.DataRequired()], default=3)
-    initial_inhibition_radius = IntegerField('InitialInhibitionRadius', [validators.DataRequired()], default=1)
-    permanence_inc = FloatField('PermanenceInc', [validators.DataRequired()], default=0.1)
-    permanence_dec = FloatField('PermanenceDec', [validators.DataRequired()], default=0.1)
-    max_boost = IntegerField('MaxBoost', [validators.DataRequired()], default=1)
-    min_duty_cycle_fraction = FloatField('MinDutyCycleFraction', [validators.DataRequired()], default=0.2)
+    desired_local_activity = IntegerField('DesiredLocalActivity', [validators.DataRequired()], default=3, description="Желаемое число активных колонок (не меньше)")
+    connected_pct = IntegerField('ConnectedPercent', [validators.DataRequired()], default=1, description="Количество синапсов, которые станут потенциальными, от общего числа замапленных синапсов колонки")
+    connected_perm = FloatField('PermanenceThreshold', [validators.DataRequired()], default=0.01, description="Если значение перманентности синапса больше данного значения, то синапс считается подключенным")
+    xinput = IntegerField('InputSize', [validators.DataRequired()], default=3, description="Ширина\высота входной квадратной матрицы")
+    # yinput = IntegerField('InputHeight', [validators.DataRequired()], default=3, description="asd")
+    potential_radius = IntegerField('PotentialRadius', [validators.DataRequired()], default=4, description="Радиус для маппера, который определяет с какими элементами входной матрицы может быть связана колонка")
+    xdimension = IntegerField('ColumnsSize', [validators.DataRequired()], default=3, description="Ширина\высота матрицы колонок")
+    # ydimension = IntegerField('ColumnsHeight', [validators.DataRequired()], default=3, description="asd")
+    initial_inhibition_radius = IntegerField('InitialInhibitionRadius', [validators.DataRequired()], default=1, description="Начальное значение радиуса, в котором данная колонка подавляет другие колонки")
+    permanence_inc = FloatField('PermanenceInc', [validators.DataRequired()], default=0.1, description="Значение, на которое увеличивается перманентность синапса")
+    permanence_dec = FloatField('PermanenceDec', [validators.DataRequired()], default=0.1, description="Значение, на которое уменьшается перманентность синапса")
+    max_boost = IntegerField('MaxBoost', [validators.DataRequired()], default=1, description="Максимальный коэфицент усиления колонки (больше быть не может)")
+    min_overlap = IntegerField('MinOverlap', [validators.DataRequired()], default=1, description="Если перекрытие колонки меньше данного значения, то считается, что она простаивает")
+    min_duty_cycle_fraction = FloatField('MinDutyCycleFraction', [validators.DataRequired()], default=0.2, description="Если колонка простаивает больше данного значения циклов, то она стимулируется")
 
     # TemporalPooler Settings
-    column_size = IntegerField('CellsPerColumn', [validators.DataRequired()], default=3)
-    initial_permanence =  FloatField('InitialPermanence', [validators.DataRequired()], default=0.30)
-    synapse_threshold =  FloatField('SynapseThreshold', [validators.DataRequired()], default=0.25)
-    dendrite_permanence_inc_delta =  FloatField('DendritePermanenceIncDelta', [validators.DataRequired()], default=0.02)
-    dendrite_permanence_dec_delta =  FloatField('DendritePermanenceDecDelta', [validators.DataRequired()], default=-0.1)
-    dendrite_activate_threshold =  FloatField('DendriteActivateThreshold', [validators.DataRequired()], default=1)
-    passive_time_to_active_threshold = IntegerField('PassiveTimeToActiveThreshold', [validators.DataRequired()], default=2000)
+    column_size = IntegerField('CellsPerColumn', [validators.DataRequired()], default=3, description="Количество клеток в колонке")
+    initial_permanence =  FloatField('InitialPermanence', [validators.DataRequired()], default=0.30, description="Начальная перманентность синапса")
+    synapse_threshold =  FloatField('SynapseThreshold', [validators.DataRequired()], default=0.25, description="Если перманентность синапса выше этой велечины, он будет срабатывать")
+    dendrite_permanence_inc_delta =  FloatField('DendritePermanenceIncDelta', [validators.DataRequired()], default=0.02, description="Значение, которое будет прибавляться к перманентности синапсов дендрита, которые привели к правильному предсказанию")
+    dendrite_permanence_dec_delta =  FloatField('DendritePermanenceDecDelta', [validators.DataRequired()], default=-0.1, description="Значение, которое будет прибавляться к перманентности синапсов дендрита, которые привели к неправильному предсказанию ")
+    dendrite_activate_threshold =  FloatField('DendriteActivateThreshold', [validators.DataRequired()], default=1, description="Необходимое количество активных синапсов для активации дендрита")
+    passive_time_to_active_threshold = IntegerField('PassiveTimeToActiveThreshold', [validators.DataRequired()], default=2000, description="Порог, определяющий активацию клетки, даже если она не была предсказана (долго простаивала)")
 
     # Input Settings
-    scale = IntegerField('InputScale', [validators.DataRequired()], default=2)
-    steps_number = IntegerField('GeneratorStepsNumber', [validators.DataRequired()], default=100)
+    scale = IntegerField('InputScale', [validators.DataRequired()], default=2, description="Масштабный множитель входных данных ('раздутие')")
+    # steps_number = IntegerField('GeneratorStepsNumber', [validators.DataRequired()], default=100, description="asd")
     # generator = HardSteps
     # generator = ConstantActiveBit
     # generator = TestSimpleSteps
@@ -72,7 +71,6 @@ class SettingsForm(Form):
     def getSpatialSettings(self):
         spset = SpatialSettings()
         spset.debug = self.debug.data
-        spset.activation_threshold = self.activation_threshold.data
         spset.min_overlap = self.min_overlap.data
         spset.desired_local_activity = self.desired_local_activity.data
         spset.connected_pct = self.connected_pct.data

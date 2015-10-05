@@ -8,7 +8,7 @@ class HTMCore:
                                     inset.SCALE)
 
         spset.xinput=spset.xinput*inset.SCALE
-        spset.yinput=spset.yinput*inset.SCALE
+        spset.yinput=spset.xinput*inset.SCALE
 
         self.spatial_pooler = sp.Region(spset, inset.MAPPER)
         self.temporal_pooler = tp.Region(spset.xdimension, tpset.COLUMN_SIZE)

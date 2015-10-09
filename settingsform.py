@@ -7,7 +7,7 @@ sys.path.insert(0, "htm-core/temporalPooler")
 sys.path.insert(0, "htm-core/gens")
 sys.path.insert(0, "htm-core/apps")
 
-from settings import SpatialSettings, TemporalSettings, InputSettings
+from apps.settings import temporal_settings, spatial_settings, input_settings
 from gens.input_generators import *
 
 from spatialPooler.mappers.sp_simple_mapper import SimpleMapper
@@ -69,7 +69,7 @@ class SettingsForm(Form):
     mapper = SelectField('Mapper', choices = [(list(mappers.keys())[i],list(mappers.keys())[i]) for i in range(len(mappers.keys()))], default="SquareMapperAutoRadius", validators = [validators.DataRequired()])
 
     def getSpatialSettings(self):
-        spset = SpatialSettings()
+        spset = spatial_settings
         spset.debug = self.debug.data
         spset.min_overlap = self.min_overlap.data
         spset.desired_local_activity = self.desired_local_activity.data
@@ -86,7 +86,7 @@ class SettingsForm(Form):
         return spset
 
     def getTemporalSettings(self):
-        tpset = TemporalSettings()
+        tpset = temporal_settings
         tpset.COLUMN_SIZE = self.column_size.data
         tpset.INITIAL_PERMANENCE = self.initial_permanence.data
         tpset.SYNAPSE_THRESHOLD = self.synapse_threshold.data
@@ -97,7 +97,7 @@ class SettingsForm(Form):
         return tpset
 
     def getInputSettings(self):
-        inset = InputSettings()
+        inset = input_settings
         inset.SCALE = self.scale.data
         inset.GENERATOR = gens[self.generator.data]
         inset.MAPPER = mappers[self.mapper.data]

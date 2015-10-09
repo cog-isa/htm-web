@@ -12,6 +12,7 @@ class HTMCore:
         spset.ydimension=spset.xdimension
 
         self.spatial_pooler = sp.Region(spset, inset.MAPPER)
+
         self.temporal_pooler = tp.Region(spset.xdimension, tpset.COLUMN_SIZE)
         # не стоит это сереализовывать
         self.input = None
